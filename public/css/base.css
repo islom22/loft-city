@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+/* css variable start */
+
+:root {
+  --yellowColor: #ff7a00;
+  --yellowColor2: #eb5757;
+  --blackColor: #030400;
+  --blackPure: #000000;
+  --whitePure: #ffffff;
+  --blackColor2: #5e5e5c;
+  --grayColor: #020105;
+  --grayColor2: #c3c3c2;
+  --formBg: #fbfbfb;
+  --hrColor: #ffd7b1;
+  --sliderTitle: #999999;
+  --reviewsCommnet: #666666;
+  --brownCustom: #68412d;
+  --aquaCustom: #9ec8bb;
+  --tabtncolor: #bebebe;
+  --imgBorder: #e4e4e4;
+  --sliderDescription: #777777;
+
+  --inputFocusBg: rgba(255, 122, 0, 0.08);
+}
+/* css variable end */
+
+/* base css start */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  color: var(--blackPure);
+}
+.container__size {
+  max-width: 1925px;
+  padding: 0px 200px;
+  margin: 0 auto;
+}
+.divider__wrapper {
+  margin-top: 80px;
+  margin-left: 15px;
+  display: flex;
+  font-family: "girloy__regular";
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--blackColor);
+}
+.divider__line {
+  opacity: 0.5;
+  margin: 0px 16px;
+}
+.divider__main {
+  color: var(--yellowColor);
+}
+/* base css end */
+
+/* local font start */
+
+@font-face {
+  /* 400 */
+  font-family: "girloy__regular";
+  src: url("../font/GILROY-REGULAR.TTF") format("truetype");
+}
+@font-face {
+  /* 500 */
+  font-family: "girloy__medium";
+  src: url("../font/GILROY-MEDIUM.TTF") format("truetype");
+}
+@font-face {
+  /* 600 */
+  font-family: "girloy__semibold";
+  src: url("../font/GILROY-SEMIBOLD.TTF") format("truetype");
+}
+/* local font end */
+
+@media (max-width: 1450px) {
+  .container__size {
+    padding: 0px 100px;
+  }
+}
+@media (max-width: 768px) {
+  .container__size {
+    padding: 0px 30px;
+  }
+}
+@media (max-width: 480px) {
+  .container__size {
+    padding: 0px 20px;
+  }
+}

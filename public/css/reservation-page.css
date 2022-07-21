@@ -1,0 +1,381 @@
+.divider__wrapper {
+  margin-left: 0 !important;
+  margin-top: 20px !important;
+}
+.divider__main:hover,
+.divider__about:hover {
+  color: var(--yellowColor);
+}
+.reservation__wrapper {
+  display: grid;
+  grid-template-columns: 66% 33%;
+  column-gap: 24px;
+  align-items: start;
+}
+.reservation__title {
+  font-family: "girloy__medium";
+  font-weight: 500;
+  font-size: 35px;
+  line-height: 40px;
+  margin: 20px 0px 40px 0px;
+  color: var(--blackColor);
+}
+.form__wrapper {
+  background-color: var(--formBg);
+  padding: 23px;
+}
+.input__flex__box__wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 24px;
+}
+.reservation__input__label {
+  font-family: "girloy__regular";
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--blackColor);
+}
+.reservation__input__label sup {
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--yellowColor2);
+}
+.reservation__input {
+  margin-top: 8px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--grayColor2);
+  border-radius: 8px;
+}
+.reservation__input:focus,
+textarea:focus {
+  outline: none;
+  background: var(--inputFocusBg);
+  border: 1px solid var(--yellowColor);
+}
+.textarea__wrapper textarea:focus {
+  border: 1px solid var(--yellowColor);
+}
+.select__bg {
+  background-color: white;
+}
+.e__mail__box {
+  margin-top: 21px;
+}
+.select__box {
+  margin-top: 20px;
+}
+.textarea__wrapper {
+  margin-top: 20px;
+}
+.textarea__wrapper textarea {
+  margin-top: 12px;
+  padding: 12px;
+  outline: none;
+  width: 100%;
+  resize: none;
+  border-radius: 8px;
+  height: 100px;
+  border: 1px solid var(--grayColor2);
+}
+.radio__name {
+  font-family: "girloy__regular";
+  margin-left: 10px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--blackColor);
+}
+.payment__buy {
+  margin-top: 56px;
+}
+.payment h1 {
+  margin-top: 40px;
+  font-family: "girloy__medium";
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--blackColor);
+}
+.pay__radio__wrapper {
+  display: flex;
+  margin-top: 16px;
+}
+.pay__choose {
+  display: flex;
+}
+.pay__choose__second {
+  margin-left: 160px;
+}
+.pay__choose label {
+  display: flex;
+  align-items: center;
+  margin: 15px 20px;
+  cursor: pointer;
+  font-size: 20px;
+}
+input[type="radio"] {
+  opacity: 0;
+}
+.redio__design {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  outline-offset: 5px;
+  outline: 1px solid #888888;
+  margin-right: 20px;
+}
+input[type="radio"]:checked ~ .redio__design {
+  outline-color: #ff7a00;
+  background: #ff7a00;
+}
+
+.pay__for__buy {
+  margin-left: 63px;
+}
+.form__btn__wrapper {
+  margin-top: 50px;
+}
+.form__btn__wrapper button {
+  padding: 15px 80px;
+  font-family: "girloy__regular";
+  font-size: 18px;
+  line-height: 21px;
+  border: 1px solid var(--yellowColor);
+  cursor: pointer;
+}
+.form__btn__wrapper button:nth-child(1) {
+  background-color: transparent;
+  color: var(--yellowColor);
+}
+.form__btn__wrapper button:nth-child(2) {
+  color: var(--yellowColor);
+  background-color: var(--yellowColor);
+  border: 1px solid var(--yellowColor);
+  color: white;
+  margin-left: 20px;
+}
+.reservation__second__half {
+  background-color: var(--formBg);
+  padding: 24px;
+}
+.reservation__second__half__title {
+  font-family: "girloy__medium";
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--blackColor);
+  margin-bottom: 32px;
+}
+.reservation__second__half__image__wrapper {
+  position: relative;
+  height: 153px;
+  width: 153px;
+}
+.reservation__second__half__image__wrapper img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.reservation__second__half__card {
+  display: flex;
+}
+.reservation__second__half__desctiptions {
+  margin-left: 15px;
+}
+.reservation__second__half__desctiptions h4:first-child {
+  font-family: "girloy__regular";
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--blackColor);
+}
+.reservation__second__half__desctiptions h5 {
+  font-family: "girloy__regular";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  margin: 8px 0px;
+  color: var(--blackColor);
+  opacity: 0.56;
+}
+.reservation__second__half__desctiptions h4:last-child {
+  font-family: "girloy__medium";
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--blackColor);
+}
+.reservation__second__card {
+  margin-top: 25px;
+}
+.reservation__second__half__hr {
+  margin-top: 20px;
+  border: none;
+  height: 1px;
+  background: var(--hrColor);
+}
+.prices__wrapper,
+.total__price {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.prices__wrapper__first {
+  margin: 24px 0px;
+}
+.prices__wrapper__second {
+  padding-bottom: 17px;
+}
+.prices__wrapper h3:first-child {
+  font-family: "girloy__regular";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--blackColor2);
+}
+.prices__wrapper h3:last-child {
+  font-family: "girloy__medium";
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--blackColor);
+}
+.total__price {
+  padding: 24px 0px;
+}
+.total__price h3 {
+  font-family: "girloy__regular";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--blackColor);
+}
+/* Media Query start */
+@media (max-width: 1136px) {
+  .reservation__second__half__image__wrapper {
+    width: 122px;
+    height: 122px;
+  }
+  .input__flex__box__wrapper {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .reservation__wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pay__radio__wrapper {
+    flex-direction: column;
+  }
+  .pay__choose__second {
+    margin-left: 0;
+  }
+  .pay__for__buy {
+    margin-left: 0;
+  }
+  .form__btn__wrapper {
+    display: flex;
+    align-items: center;
+  }
+  .telephone__box {
+    margin-top: 20px;
+  }
+}
+@media (max-width: 1076px) {
+  .prices__wrapper h3:first-child {
+    font-size: 14px;
+  }
+  .prices__wrapper h3:last-child {
+    font-size: 16px;
+    margin-left: 18px;
+  }
+  .total__price h3 {
+    font-size: 15px;
+  }
+  .total__price h3:last-child {
+    margin-left: 18px;
+  }
+  .reservation__second__half__desctiptions h4:first-child {
+    font-size: 15px;
+  }
+  .reservation__second__half__desctiptions h5 {
+    font-size: 14px;
+  }
+  .reservation__second__half__desctiptions h4:last-child {
+    font-size: 17px;
+  }
+  .reservation__second__half__image__wrapper {
+    width: 100px;
+    height: 100px;
+  }
+}
+@media (max-width: 1000px) {
+  .reservation__wrapper {
+    grid-template-columns: 50% 50%;
+  }
+  .form__btn__wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .form__btn__wrapper button {
+    width: 100%;
+  }
+  .form__btn__wrapper button:nth-child(2) {
+    margin: 20px 0px 0px 0px;
+  }
+}
+@media (max-width: 1000px) {
+  .reservation__wrapper {
+    grid-template-columns: 100%;
+  }
+  .reservation__second__half {
+    margin-top: 50px;
+  }
+}
+@media (max-width: 991px) {
+  .order {
+    margin: 50px 0px 50px 0px;
+  }
+}
+@media (max-width: 768px) {
+  .textarea__wrapper textarea {
+    height: 260px;
+  }
+  .divider__wrapper {
+    font-size: 15px;
+  }
+  .divider__line {
+    margin: 0px 10px;
+  }
+  .reservation__title {
+    font-size: 26px;
+    margin: 15px 0px 25px 0px;
+  }
+  .order__pic {
+    display: none;
+  }
+}
+@media (max-width: 500px) {
+  .divider__wrapper {
+    font-size: 15px;
+  }
+  .divider__line {
+    margin: 0px 4px;
+  }
+  .divider__wrapper {
+    margin-top: 40px !important;
+  }
+  .total__price {
+    padding: 0px;
+  }
+}
+@media (max-width: 400px) {
+  .reservation__title {
+    font-size: 22px;
+    margin: 4px 0px 15px 0px;
+  }
+  .order {
+    margin-top: 50px;
+  }
+}
+/* Media Query End */
