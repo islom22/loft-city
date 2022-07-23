@@ -40,7 +40,7 @@
                                             </div>
                                             <div class="mb-4">
                                                 <label for="email">Phone</label>
-                                                <input type="number" class="form-control" name="phone" placeholder="phone" value="{{ $order->phone }}">
+                                                <input type="text" class="form-control" name="phone" placeholder="phone" value="{{ $order->phone }}">
                                             </div>
                                             <div class="mb-4">
                                                 <label for="email">Email</label>

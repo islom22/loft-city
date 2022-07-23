@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use phpDocumentor\Reflection\Types\Nullable;
 
 return new class extends Migration
 {
@@ -15,17 +16,17 @@ return new class extends Migration
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
-            $table->text('video')->nullable();
+            $table->text('video');
             $table->text('img1');
             $table->text('img2');
             $table->text('img3');
-            $table->integer('phone');
-            $table->text('telegram1');
-            $table->text('telegram2');
-            $table->text('instagram');
-            $table->text('address1');
-            $table->text('address2');
-            $table->text('address3');
+            $table->text('phone')->nullable();
+            $table->text('telegram_user')->nullable();
+            $table->text('telegram_link')->nullable();
+            $table->text('instagram')->nullable();
+            $table->text('address1')->nullable();
+            $table->text('address2')->nullable();
+            $table->text('address3')->nullable();
             $table->timestamps();
         });
     }

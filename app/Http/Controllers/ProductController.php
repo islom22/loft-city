@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Termwind\Components\Dd;
 
 class ProductController extends Controller
 {
@@ -18,9 +19,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->paginate(10);
+        $products = Product::with('category')
+            ->paginate(10);
         $categories = Category::all();
-        return view('app.product.index',compact('products', 'categories'));
+
+        return view('app.product.index',compact(
+            'products',
+            'categories'
+        ));
     }
 
     /**
@@ -32,7 +38,12 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $languages = Lang::all();
-        return view('app.product.create',compact('categories','languages'));
+        $products = Product::all();
+
+        return view('app.product.create',compact(
+            'categories',
+            'products',
+            'languages'));
     }
 
     /**
@@ -43,26 +54,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
         $request->validate([
-            'price' => 'required',
             'title' => 'required',
             'category_id' => 'required',
             'img.*' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
             'img' => 'required'
          ]);
 
-        $product = new Product();
-        $product->category_id = $request->input('category_id');
-        $product->title = $request->input('title');
-        $product->subtitle = $request->input('subtitle');
-        $product->brand = $request->input('brand');
-        $product->left = $request->input('left');
-        $product->price = $request->input('price');
-        $product->desc = $request->input('desc');
-        $product->info = $request->input('info');
-        $product->save();
-   
-         
+        // $product = new Product();
+        // $product->category_id = $request->input('category_id');
+        // $product->title = $request->input('title');
+        // $product->subtitle = $request->input('subtitle');
+        // $product->brand = $request->input('brand');
+        // $product->left = $request->input('left');
+        // $product->price = $request->input('price');
+        // $product->desc = $request->input('desc');
+        // $product->info = $request->input('info');
+        // $product->save();
+        //  dd($request->all());
+        $product = Product::create($data);
         if($request->hasFile('img')){
             foreach($request->file('img') as $item){
                 $image_name = md5(rand(1000,10000));
@@ -106,7 +117,11 @@ class ProductController extends Controller
         $categories = Category::all();
         $product = Product::find($id);
         $languages = Lang::all();
-        return view('app.product.edit',compact('product','categories','languages'));
+        return view('app.product.edit',compact(
+            'product',
+            'categories',
+            'languages'
+        ));
     }
 
     /**
@@ -119,10 +134,9 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'price' => 'required',
             'title' => 'required',
             'category_id' => 'required',
-            'img.*' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'img.*' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'img' => 'required'
          ]);
 
@@ -161,6 +175,7 @@ class ProductController extends Controller
             ]);
         }
         $product->update();
+
         return redirect()->route('products.index')->with('message','Product Edit Successfully');
     }
 }
@@ -186,9 +201,14 @@ class ProductController extends Controller
         $products = Product::all();
         $categories = Category::all();  
         if ($category_id) {
-            $products = Product::where('category_id', $category_id)->get();
+            $products = Product::where('category_id',
+             $category_id
+             )->get();
         }
-        return view('main.products',compact('products','categories'));
+        
+        return view('main.products',compact(
+            'products',
+            'categories'));
     }
 
     public function shows($id){

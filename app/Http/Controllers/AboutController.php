@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\About;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class AboutController extends Controller
+class   AboutController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +15,8 @@ class AboutController extends Controller
      */
     public function index()
     {
-        //
+        $about = About::latest()->paginate(10);
+        return view('app.about.index', compact('about'));
     }
 
     /**
@@ -23,7 +26,8 @@ class AboutController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('app.about.create');
     }
 
     /**
@@ -34,7 +38,63 @@ class AboutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $request->validate([
+            'img1' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'img2' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'img3' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'video' => 'required|mimes:mp4,mov,ogg | max:20000',
+            // 'phone' => 'required',
+        ]);
+       
+       $about = new About();
+       if($request->hasfile('img1'))
+       {
+           $file = $request->file('img1');
+           $extention = $file->getClientOriginalExtension();
+           $filename = time().'.'.$extention;
+           $file = $request->file('img1');
+           $file->move('uploads/about/', $filename);
+           $about->img1 = $filename;
+       }
+       if($request->hasfile('img2'))
+       {
+           $file = $request->file('img2');
+           $extention = $file->getClientOriginalExtension();
+           $filename = time().'.'.$extention;
+           $file = $request->file('img2');
+           $file->move('uploads/about1/', $filename);
+           $about->img2 = $filename;
+       }
+       if($request->hasfile('img3'))
+       {
+           $file = $request->file('img3');
+           $extention = $file->getClientOriginalExtension();
+           $filename = time().'.'.$extention;
+           $file = $request->file('img3');
+           $file->move('uploads/about2/', $filename);
+           $about->img3 = $filename;
+       }
+       if($request->hasfile('video'))
+       {
+           $file = $request->file('video');
+           $extention = $file->getClientOriginalExtension();
+           $filename = time().'.'.$extention;
+           $file = $request->file('video');
+           $file->move('uploads/video/', $filename);
+           $about->video = $filename;
+       }
+        $about->address1 = $request->input('address1');
+        $about->phone = $request->input('phone');
+        $about->address2 = $request->input('address2');
+        $about->address3 = $request->input('address3');
+        $about->telegram_user = $request->input('telegram_user');
+        $about->telegram_link = $request->input('telegram_link');
+        $about->instagram = $request->input('instagram');
+        $about->save();
+
+        return redirect()->route('abouts.index')->with(['message' => 'Successfully added!']);
     }
 
     /**
@@ -56,7 +116,10 @@ class AboutController extends Controller
      */
     public function edit($id)
     {
-        //
+        $about = About::find($id);
+        return view('app.about.edit', compact([
+            'about'
+        ]));
     }
 
     /**
@@ -68,7 +131,62 @@ class AboutController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $request->validate([
+            'img1' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'img2' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'img3' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'video' => 'required|mimes:mp4,mov,ogg | max:20000',
+            // 'phone' => 'required',
+        ]);
+
+        $about =About::find($id);
+       if($request->hasfile('img1'))
+       {
+           $file = $request->file('img1');
+           $extention = $file->getClientOriginalExtension();
+           $filename = time().'.'.$extention;
+           $file = $request->file('img1');
+           $file->move('uploads/about/', $filename);
+           $about->img1 = $filename;
+       }
+       if($request->hasfile('img2'))
+       {
+           $file = $request->file('img2');
+           $extention = $file->getClientOriginalExtension();
+           $filename = time().'.'.$extention;
+           $file = $request->file('img2');
+           $file->move('uploads/about1/', $filename);
+           $about->img2 = $filename;
+       }
+       if($request->hasfile('img3'))
+       {
+           $file = $request->file('img3');
+           $extention = $file->getClientOriginalExtension();
+           $filename = time().'.'.$extention;
+           $file = $request->file('img3');
+           $file->move('uploads/about2/', $filename);
+           $about->img3 = $filename;
+       }
+       if($request->hasfile('video'))
+       {
+           $file = $request->file('video');
+           $extention = $file->getClientOriginalExtension();
+           $filename = time().'.'.$extention;
+           $file = $request->file('video');
+           $file->move('uploads/video/', $filename);
+           $about->video = $filename;
+       }
+        $about->address1 = $request->input('address1');
+        $about->phone = $request->input('phone');
+        $about->address2 = $request->input('address2');
+        $about->address3 = $request->input('address3');
+        $about->telegram_user = $request->input('telegram_user');
+        $about->telegram_link = $request->input('telegram_link');
+        $about->instagram = $request->input('instagram');
+        $about->update();
+
+        return redirect()->route('abouts.index')->with(['message' => 'Successfully updated!']);
     }
 
     /**
@@ -79,6 +197,8 @@ class AboutController extends Controller
      */
     public function destroy($id)
     {
-        //
+        About::find($id)->delete();
+
+        return redirect()->route('abouts.index')->with(['message' => 'Successfully deleted!']);
     }
 }

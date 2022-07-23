@@ -30,7 +30,7 @@
                             <div class="col-lg-6 col-sm-6">
                                 <div class="mb-3">
                                     <label for="formFile" class="form-label">File</label>
-                                    <input class="form-control" type="file" name="file" >
+                                    <input class="form-control" value="{{ old('file') }}" type="file" name="file" >
                                 </div>
                             </div>
                         </div>

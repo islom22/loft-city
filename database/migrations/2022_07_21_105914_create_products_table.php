@@ -19,10 +19,10 @@ return new class extends Migration
             $table->text('title');
             $table->text('subtitle')->nullable();
             $table->text('brand')->nullable();
-            $table->text('desc');
-            $table->text('info');
+            $table->text('desc')->nullable();
+            $table->text('info')->nullable();
             $table->integer('left')->nullable();
-            $table->integer('price');
+            $table->integer('price')->nullable();
             $table->timestamps();
         });
     }

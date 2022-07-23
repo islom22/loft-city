@@ -55,7 +55,7 @@
                                                 {{-- <input type="text" name="title" class="form-control" value="{{ old('title') }}"> --}}
                                                 <input type="text" class="form-control" id="brand{{ $key }}" onchange="Brand(this,{{ $key }})"
                                                     name="brand" placeholder="brand"
-                                                    value="{{ old('brand.' . $language->small) }}">
+                                                    value="{{ old('brand') }}">
                                             </div>
                                             <div class="form-group mb-3">
                                                 <label for="">Subtitle</label>
@@ -83,14 +83,14 @@
                                                 {{-- <input type="text" name="subtitle" class="form-control" value="{{ old('subtitle') }}"> --}}
                                                 <input type="integer" class="form-control" id="price{{ $key }}" onchange="Price(this,{{ $key }})"
                                                     name="price" placeholder="price"
-                                                    value="{{ old('price.' . $language->small) }}">
+                                                    value="{{ old('price') }}">
                                             </div>
                                             <div class="form-group mb-3">
                                                 <label for="">Left</label>
                                                 {{-- <input type="text" name="subtitle" class="form-control" value="{{ old('subtitle') }}"> --}}
                                                 <input type="integer" class="form-control" id="left{{ $key }}" onchange="Left(this,{{ $key }})"
                                                     name="left" placeholder="left"
-                                                    value="{{ old('left.' . $language->small) }}">
+                                                    value="{{ old('left') }}">
                                             </div>
                                             <div>
                                                 <label for="">Category_id</label>

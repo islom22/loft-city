@@ -20,19 +20,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                      
+                      {{-- @dd($reviews); --}}
                     @foreach($reviews as $review)
                         <!-- item -->
                         <tr>
                             <td><a href="#" class="text-primary fw-bold p">{{ ($reviews ->currentpage()-1) * $reviews ->perpage() + $loop->index + 1 }}</a></td>
                             {{-- <td class="fw-bold">{{ $review->product->title['ru'] }}</td> --}}
                             <td class="fw-bold">{{ $review->comment['ru'] ?? '--'  }}</td>
-                            @if( $review->status == 1 ){
+                            @if( $review->status == 1 )
                                 <td class="fw-bold">Activ</td>
-                            }
-                            @else{
+                            @else
                                 <td class="fw-bold">No activ</td>
-                            }
                             @endif
                             <td>
                                 <div class="actions d-flex">
