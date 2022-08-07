@@ -379,3 +379,16 @@ input[type="radio"]:checked ~ .redio__design {
   }
 }
 /* Media Query End */
+#basket_count {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #ff7a00;
+  padding: 5px 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 500;
+}

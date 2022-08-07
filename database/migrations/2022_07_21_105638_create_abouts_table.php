@@ -16,10 +16,10 @@ return new class extends Migration
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
-            $table->text('video');
-            $table->text('img1');
-            $table->text('img2');
-            $table->text('img3');
+            $table->text('video')->nullable();
+            $table->text('img1')->nullable();
+            $table->text('img2')->nullable();
+            $table->text('img3')->nullable();
             $table->text('phone')->nullable();
             $table->text('telegram_user')->nullable();
             $table->text('telegram_link')->nullable();

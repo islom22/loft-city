@@ -47,17 +47,37 @@ class CategoryController extends Controller
         // dd($request->title);
 
         $category = new Category();
-        if($request->hasfile('img'))
-        {
+        if ($request->hasfile('img')) {
             $file = $request->file('img');
             $extention = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extention;
+            $filename = time() . '.' . $extention;
             $file->move('uploads/category/', $filename);
             $category->img = $filename;
         }
         $category->title = $request->title;
         $category->save();
         return redirect()->route('categories.index')->with('message', "Category Added Successfully");
+    }
+
+    public function upload_category_image(Request $request)
+    {
+        //   dd($request->all());
+        $request->validate([
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+        ]);
+
+        $category = Category::find($request->id);
+
+        $file = $request->file('img');
+        $extention = $file->getClientOriginalExtension();
+        $filename = time() . '.' . $extention;
+        $file->move('uploads/category/', $filename);
+        $category->img = $filename;
+
+
+        $category->save();
+
+        return redirect()->back()->with('message', 'Image Upload Successfully');
     }
 
     /**
@@ -80,7 +100,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
         $languages = Lang::all();
         return view('app.category.edit', compact('category', 'languages'));
     }
@@ -95,23 +115,23 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'img' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'img' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'title.ru' => 'required|min:1|max:255'
         ]);
 
         $category = Category::find($id);
-        if($request->hasfile('img'))
-        {
-            $destination = 'uploads/category/'.$category->img;
-            if(File::exists($destination)){
-                File::delete($destination);
-            }
-            $file = $request->file('img');
-            $extention = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extention;
-            $file->move('uploads/category/', $filename);
-            $category->img = $filename;
-        }
+        // if($request->hasfile('img'))
+        // {
+        //     $destination = 'uploads/category/'.$category->img;
+        //     if(File::exists($destination)){
+        //         File::delete($destination);
+        //     }
+        //     $file = $request->file('img');
+        //     $extention = $file->getClientOriginalExtension();
+        //     $filename = time().'.'.$extention;
+        //     $file->move('uploads/category/', $filename);
+        //     $category->img = $filename;
+        // }
         $category->title = $request->title;
         $category->update();
         return redirect()->route('categories.index')->with('message', 'Category Edit Successfully');
@@ -126,8 +146,8 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
-        $destination = 'uploads/category/'.$category->img;
-        if(File::exists($destination)){
+        $destination = 'uploads/category/' . $category->img;
+        if (File::exists($destination)) {
             File::delete($destination);
         }
         $category->delete();

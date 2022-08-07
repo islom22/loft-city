@@ -5,7 +5,7 @@
     <h1 class="text-uppercase mt-5">Category</h1>
 
     <div class="headcrumbs d-flex mb-3">
-        <a href="{{ route('categories.index') }}" class="d-flex text-uppercase me-2" style="opacity:25%">Posts</a> >> <a class="d-flex text-uppercase ms-2">Add post</a>
+        <a href="{{ route('categories.index') }}" class="d-flex text-uppercase me-2" style="opacity:25%">Category</a> >> <a class="d-flex text-uppercase ms-2">Add category</a>
     </div>
 
     @if ($errors->any())
@@ -46,7 +46,7 @@
                                 </div>
                             @endforeach
                         </div>
-                        <div class="row mb-4">
+                        <div class="row mb-4">  
                             <div class="col-lg-6 col-sm-6">
                                 <div class="mb-3">
                                     <label for="formFile" class="form-label">Photo</label>

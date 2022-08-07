@@ -46,16 +46,9 @@
                                             <div class="mb-4">
                                                 <label for="title">Title</label>
                                                 {{-- <input type="text" name="title" class="form-control" value="{{ old('title') }}"> --}}
-                                                <input type="text" class="form-control" id="title"
+                                                <input type="text" class="form-control"  id="title"
                                                     name="title[{{ $language->small }}]" placeholder="title"
                                                     value="{{ old('title.' . $language->small) }}">
-                                            </div>
-                                            <div class="mb-4">
-                                                <label for="">Brand</label>
-                                                {{-- <input type="text" name="title" class="form-control" value="{{ old('title') }}"> --}}
-                                                <input type="text" class="form-control" id="brand{{ $key }}" onchange="Brand(this,{{ $key }})"
-                                                    name="brand" placeholder="brand"
-                                                    value="{{ old('brand') }}">
                                             </div>
                                             <div class="form-group mb-3">
                                                 <label for="">Subtitle</label>
@@ -66,53 +59,66 @@
                                             </div>
                                             <div class="form-group mb-3">
                                                 <label for="textarea">Desc</label>
-                                                <textarea type="text" class="form-control ckeditor" id="desc"
-                                                name="desc[{{ $language->small }}]" placeholder="desc"
-                                                value="{{ old('desc.' . $language->small) }}"></textarea>
+                                                <textarea type="text" class="form-control ckeditor" id="desc" name="desc[{{ $language->small }}]"
+                                                    placeholder="desc" value="{{ old('desc.' . $language->small) }}">{{ old('desc.' . $language->small) }}</textarea>
                                                 {{-- <input type="text" name="desc" class="form-control" value="{{ old('desc') }}"> --}}
                                             </div>
                                             <div class="form-group mb-3">
                                                 <label for="textarea">Info</label>
-                                                <textarea type="text" class="form-control ckeditor" id="info"
-                                                name="info[{{ $language->small }}]" placeholder="info"
-                                                value="{{ old('info.' . $language->small) }}"></textarea>
+                                                <textarea type="text" class="form-control ckeditor" id="info" name="info[{{ $language->small }}]"
+                                                    placeholder="info" value="{{ old('info.' . $language->small) }}">{{ old('info.' . $language->small) }}</textarea>
                                                 {{-- <input type="text" name="desc" class="form-control" value="{{ old('desc') }}"> --}}
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <label for="">Price</label>
-                                                {{-- <input type="text" name="subtitle" class="form-control" value="{{ old('subtitle') }}"> --}}
-                                                <input type="integer" class="form-control" id="price{{ $key }}" onchange="Price(this,{{ $key }})"
-                                                    name="price" placeholder="price"
-                                                    value="{{ old('price') }}">
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                <label for="">Left</label>
-                                                {{-- <input type="text" name="subtitle" class="form-control" value="{{ old('subtitle') }}"> --}}
-                                                <input type="integer" class="form-control" id="left{{ $key }}" onchange="Left(this,{{ $key }})"
-                                                    name="left" placeholder="left"
-                                                    value="{{ old('left') }}">
-                                            </div>
-                                            <div>
-                                                <label for="">Category_id</label>
-                                                <select class="form-control" name="category_id"
-                                                    onchange="selectValue(this,{{ $key }})"
-                                                    id="exampleFormControlSelect{{ $key }}">
-                                                    @foreach ($categories as $category)
-                                                        <option value="{{ $category->id }}">
-                                                            {{ $category->title['ru'] }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                    
+                                           
                                             <!-- End of Form -->
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
-                            <div class="form-group mb-3">
-                                <label for="">Image</label>
-                                <input type="file" name="img[]" id="img" class="form-control" accept="image/*" multiple>
-                            </div>
+                            <div class="row mb-4">
+                                <div class="col-lg-6 col-sm-6">
+                                    <div>
+                                        <label for="">Category_id</label>
+                                        <select class="form-control" name="category_id"
+                                            onchange="selectValue(this,{{ $key }})"
+                                            id="exampleFormControlSelect{{ $key }}">
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}">
+                                                    {{ $category->title['ru'] }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="">Price</label>
+                                        {{-- <input type="text" name="subtitle" class="form-control" value="{{ old('subtitle') }}"> --}}
+                                        <input type="integer" class="form-control" id="price{{ $key }}"
+                                            onchange="Price(this,{{ $key }})" name="price"
+                                            placeholder="price" value="{{ old('price'.'--')  }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="">Left</label>
+                                        {{-- <input type="text" name="subtitle" class="form-control" value="{{ old('subtitle') }}"> --}}
+                                        <input type="integer" class="form-control" id="left{{ $key }}"
+                                            onchange="Left(this,{{ $key }})" name="left"
+                                            placeholder="left" value="{{ old('left') }}">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="">Brand</label>
+                                        {{-- <input type="text" name="title" class="form-control" value="{{ old('title') }}"> --}}
+                                        <input type="text" class="form-control" id="brand{{ $key }}"
+                                            onchange="Brand(this,{{ $key }})" name="brand"
+                                            placeholder="brand" value="{{ old('brand') }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="">Image</label>
+                                        <input type="file" name="img[]" id="img" class="form-control"
+                                            accept="image/*" multiple>
+                                    </div>
+                                </div> 
+                            </div>        
+                            
                         </div>
                         <button class="btn btn-success px-5 text-white" type="submit" style="padding:12px">Save</button>
                     </div>
@@ -203,13 +209,13 @@
                                                 <
                                                 /div>
                                             `
-                                                            }
-                                                            pv.prepend(fileBlok);
-                                                        },
-                                                        error : function (error) {
-                                                            console.log(error)
-                                                        },
+                                                                }
+                                                                pv.prepend(fileBlok);
+                                                            },
+                                                            error : function (error) {
+                                                                console.log(error)
+                                                            },
+                                                        });
                                                     });
-                                                });
     </script>
 @endsection

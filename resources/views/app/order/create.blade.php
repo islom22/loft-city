@@ -62,20 +62,20 @@
                                             </div>
                                             <div class="mb-4">
                                                 <label for="email">Address</label>
-                                                <input type="text" class="form-control" value="{{ old('name')  }}" name="address" placeholder="address" >
+                                                <input type="text" class="form-control" value="{{ old('address')  }}" name="address" placeholder="address" >
                                             </div>
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput1" class="fs-6 fw-bold mb-2">Role</label>
-                                                <select class="form-select" aria-label="" name="role"  data-control="select2" data-hide-search="true">
-                                                    <option value="Наличка">Наличка</option>
-                                                    <option value="С картой" >С картой</option>
+                                                <label for="exampleFormControlInput1" class="fs-6 fw-bold mb-2">Payment</label>
+                                                <select class="form-select" aria-label="" name="payment_method" data-control="select2" data-hide-search="true">
+                                                    <option value="cash" {{ old('payment_method') }}>Наличка</option>
+                                                    <option value="card" {{ old('payment_method') }}>С картой</option>
                                                 </select>
                                             </div>
                                             <div class="mb-4">
                                                 <label for="exampleFormControlInput2" class="fs-6 fw-bold mb-2">How_to_buy</label>
-                                                <select class="form-select" aria-label="" name="payment" data-control="select2" data-hide-search="true">
-                                                    <option value="Забрать от шоу рума">Забрать от шоу рума</option>
-                                                    <option value="С доставкой?" >С доставкой?</option>
+                                                <select class="form-select" aria-label="" name="with_delivery"  data-control="select2" data-hide-search="true">
+                                                    <option value="Забрать от шоу рума" {{ old('with_delivery') }}>Забрать от шоу рума</option>
+                                                    <option value="С доставкой?" {{ old('with_delivery') }}>С доставкой?</option>
                                                 </select>
                                             </div>
                                             <!-- End of Form -->

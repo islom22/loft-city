@@ -77,30 +77,36 @@
                 </li> --}} 
                 <li class="nav-item {{ Route::currentRouteName() == 'products.index' ? 'active' : '' }}">
                     <a href="{{ route('products.index') }}" class="nav-link">
-                        <span class="sidebar-icon">
+                        {{-- <span class="sidebar-icon">
                             <i class="fas fa-handshake me-2"></i>
                             {{-- <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"></path></svg>--}}
-                         </span>
+                         {{-- </span> --}} 
+                         <span class="sidebar-icon">
+                            <i class="fa-solid fa-city me-2"></i>
+                        </span>
                         <span class="sidebar-text">Products</span>
                     </a>
                 </li> 
                 <li class="nav-item {{ Route::currentRouteName() == 'abouts.index' ? 'active' : '' }}">
                     <a href="{{ route('abouts.index') }}" class="nav-link">
-                        <span class="sidebar-icon">
+                        {{-- <span class="sidebar-icon">
                             <i class="fas fa-clipboard me-2"></i>
                             {{-- <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"></path></svg>--}}
-                         </span>
-                        <span class="sidebar-text">Abouts</span>
+                         {{-- </span> --}} 
+                         <span class="sidebar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="me-2" width="16" height="16" fill="#9CA3AF" viewBox="0 0 512 512"><path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c17.67 0 32 14.33 32 32c0 17.67-14.33 32-32 32S224 177.7 224 160C224 142.3 238.3 128 256 128zM296 384h-80C202.8 384 192 373.3 192 360s10.75-24 24-24h16v-64H224c-13.25 0-24-10.75-24-24S210.8 224 224 224h32c13.25 0 24 10.75 24 24v88h16c13.25 0 24 10.75 24 24S309.3 384 296 384z"/></svg>
+                        </span>
+                        <span class="sidebar-text">About us</span>
                     </a>
                 </li> 
-                <li class="nav-item {{ Route::currentRouteName() == 'reviews.index' ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ Route::currentRouteName() == 'reviews.index' ? 'active' : '' }}">
                     <a href="{{ route('reviews.index') }}" class="nav-link">
                         <span class="sidebar-icon">
                             <i class="fa-solid fa-city me-2"></i>
                         </span>
                         <span class="sidebar-text">Reviews</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="nav-item {{ Route::currentRouteName() == 'orders.index' ? 'active' : '' }}">
                     <a href="{{ route('orders.index') }}" class="nav-link">

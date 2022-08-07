@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 
 class OrderController extends Controller
 {
@@ -14,7 +16,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::latest()->paginate(10);
+        $orders = Order::latest()->with('order_products')->paginate(10);
+        $products = Product::all();
         return view('app.order.index',compact('orders'));
     }
 
@@ -40,10 +43,10 @@ class OrderController extends Controller
         // dd($request->all());
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            // 'email' => 'required',
             'phone' => 'required',
-            'city' => 'required',
-            'address' => 'required',
+            // 'city' => 'required',
+            // 'address' => 'required',
          ]);
 
         $order = new Order();
@@ -52,8 +55,8 @@ class OrderController extends Controller
         $order->phone = $request->input('phone');
         $order->city = $request->input('city');
         $order->address = $request->input('address');
-        $order->role = $request->input('role');
-        $order->payment = $request->input('payment');
+        $order->payment_method = $request->input('payment_method');
+        $order->with_delivery = $request->input('with_delivery');
         $order->save();
         return redirect()->route('orders.index')->with('message','Order Added Successfully');
 
@@ -95,10 +98,10 @@ class OrderController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            // 'email' => 'required',
             'phone' => 'required',
-            'city' => 'required',
-            'address' => 'required',
+            // 'city' => 'required',
+            // 'address' => 'required',
          ]);    
 
         $order =  Order::find($id);
@@ -107,8 +110,8 @@ class OrderController extends Controller
         $order->phone = $request->input('phone');
         $order->city = $request->input('city');
         $order->address = $request->input('address');
-        $order->role = $request->input('role');
-        $order->payment = $request->input('payment');
+        $order->payment_method = $request->input('payment_method');
+        $order->with_delivery = $request->input('with_delivery');
         $order->update();
         return redirect()->route('orders.index')->with('message','Order Edit Successfully');
     }

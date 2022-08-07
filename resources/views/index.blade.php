@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('css/about-company.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/reservation-page.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/inter-page.css') }}" />
+    <link type="text/css" href="{{ asset('app/notyf.min.css') }}" rel="stylesheet">
     <style>
         .active {
             font-weight: bold
@@ -42,6 +43,39 @@
             height: auto;
         }
     </style>
+    <style>
+        .active {
+            font-weight: bold
+        }
+    </style>
+    @if (session()->has('products_count') && session()->get('products_count') != 0)
+        <style>
+            .basket__link::after {
+                content: "{{ session()->get('products_count') }}";
+                background: var(--orange);
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                font-size: 13px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+            }
+        </style>
+    @else
+        <style>
+            .basket__link::after {
+                display: none
+            }
+        </style>
+    @endif
+    @yield('links')
+
+
 </head>
 
 <body>
@@ -51,8 +85,7 @@
                 <div class="row">
                     <div class="col-1 d-flex align-items-center pe-0">
                         <a href="{{ route('index') }}" class="nav__brand">
-                            <img width="100%" class="brand" src="{{ asset('img/logo/brand.svg') }}"
-                                alt="" />
+                            <img width="100%" class="brand" src="{{ asset('img/logo/brand.svg') }}" alt="" />
                         </a>
                     </div>
                     <div class="col-11 nav__collapse">
@@ -66,36 +99,45 @@
                                     <a href="{{ route('products') }}"
                                         class="nav__link @if (request()->is('products') || request()->is('products/*')) active @endif">Каталог</a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="{{ route('reservation_page') }}"
                                         class="nav__link @if (request()->is('reservations')) || request()->is('reservations/*')) active @endif">Как
                                         заказать</a>
-                                </li>
+                                </li> --}}
                                 <li>
                                     <a class="footer__link @if (request()->is('abouts') || request()->is('abouts/*')) active @endif"
-                                        href="{{ route('about_company') }}"> О компании </a>
+                                        href="{{ route('about_company') }}"> О нас </a>
                                 </li>
-                                <li>
-                                    @php
-                                        $file = \App\Models\File::latest()->first();
-                                    @endphp
-                                    <a href="{{ asset('uploads/file/' . $file->file) }}" download
-                                        class="nav__link download__link">
-                                        <i class="bx bx-chair"></i> Скачать каталог</a>
-                                </li>
+                                @if (isset($files))
+                                    <li>
+                                        @php
+                                            $file = \App\Models\File::latest()->first();
+                                        @endphp
+
+                                        <a href="{{ asset('uploads/file/' . $file->file) }}" download
+                                            class="nav__link download__link">
+                                            <i class="bx bx-chair"></i> Скачать каталог</a>
+
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                         <div class="nav__info">
-                            <div class="nav__search">
+                            {{-- <div class="nav__search">
                                 <input type="text" placeholder="Поиск мебели" />
-                            </div>
+                            </div> --}}
                             <div class="nav__basket">
-                                <a href="#" class="basket__link"><i class="bx bx-shopping-bag"></i></a>
+                                <a href="{{ route('reservation_page') }}" class="basket__link">
+                                    <i class="bx bx-shopping-bag"></i>
+
+                                </a>
                             </div>
-                            <div class="nav__num">
-                                <p>Заказать мебель</p>
-                                <a href="tel:+998{{ $abouts->phone }}">{{ $abouts->phone }}</a>
-                            </div>
+                            @if (isset($abouts->phone))
+                                <div class="nav__num">
+                                    <p>Заказать мебель</p>
+                                    <a href="tel:+998{{ $abouts->phone }}">{{ $abouts->phone }}</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -113,36 +155,42 @@
                                                 <h1 class="home__title">
                                                     Изготовление мебели в стиле лофт
                                                 </h1>
-                                                <p class="home__subtitle">
-                                                    Позвоните или напишите в
-                                                    <span class="orange__txt">Telegram</span> — cделаем
-                                                    расчет металлической конструкции за 5 минут!
-                                                </p>
-                                                <div class="twisted">
-                                                    <a href="{{ $abouts->telegram_user }}" class="home__btn">
-                                                        <i class="bx bxl-telegram"></i> Написать в
-                                                        Telegram
-                                                    </a>
-                                                    <img class="twist"
-                                                        src="{{ asset('img/logo/twisted-arrow.svg') }}"
-                                                        alt="" />
-                                                </div>
-                                            </div>
-                                            <div class="home__info">
-                                                <div class="info__item">
-                                                    <p class="info__sup">Заказать мебель</p>
-                                                    <a href="tel:+998{{ $abouts->phone }}"
-                                                        class="info__txt">{{ $abouts->phone }}</a>
-                                                </div>
-                                                <div class="info__item">
-                                                    <p class="info__sup">Адрес:</p>
-                                                    <p class="info__txt">
-                                                        <span class="orange__txt">
-                                                            {{ $abouts->address1 }},{{ $abouts->address2 }},{{ $abouts->address3 }}
-                                                        </span>
+                                                @if (isset($abouts->telegram_user))
+                                                    <p class="home__subtitle">
+                                                        Позвоните или напишите в
+                                                        <span class="orange__txt">Telegram</span> — cделаем
+                                                        расчет металлической конструкции за 5 минут!
                                                     </p>
-                                                </div>
+                                                    <div class="twisted">
+                                                        <a href="{{ $abouts->telegram_user }}" class="home__btn">
+                                                            <i class="bx bxl-telegram"></i> Написать в
+                                                            Telegram
+                                                        </a>
+                                                        <img class="twist"
+                                                            src="{{ asset('img/logo/twisted-arrow.svg') }}"
+                                                            alt="" />
+                                                    </div>
+                                                @endif
                                             </div>
+                                            @if (isset($abouts->phone) || isset($abouts->address1) || isset($abouts->address2) || isset($abouts->address3))
+                                                <div class="home__info">
+                                                    @if (isset($abouts->phone))
+                                                        <div class="info__item">
+                                                            <p class="info__sup">Заказать мебель</p>
+                                                            <a href="tel:+998{{ $abouts->phone }}"
+                                                                class="info__txt">{{ $abouts->phone }}</a>
+                                                        </div>
+                                                    @endif
+                                                    <div class="info__item">
+                                                        <p class="info__sup">Адрес:</p>
+                                                        <p class="info__txt">
+                                                            <span class="orange__txt">
+                                                                {{ $abouts->address1 }},{{ $abouts->address2 }},{{ $abouts->address3 }}
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="col-lg-6 col-xs-12">
                                             <div class="home__img">
@@ -175,36 +223,42 @@
                                                 <h1 class="home__title">
                                                     Изготовление мебели в стиле лофт
                                                 </h1>
-                                                <p class="home__subtitle">
-                                                    Позвоните или напишите в
-                                                    <span class="orange__txt">Telegram</span> — cделаем
-                                                    расчет металлической конструкции за 5 минут!
-                                                </p>
-                                                <div class="twisted">
-                                                    <a href="{{ $abouts->telegram_user }}" class="home__btn">
-                                                        <i class="bx bxl-telegram"></i> Написать в
-                                                        Telegram
-                                                    </a>
-                                                    <img class="twist"
-                                                        src="{{ asset('img/logo/twisted-arrow.svg') }}"
-                                                        alt="" />
-                                                </div>
-                                            </div>
-                                            <div class="home__info">
-                                                <div class="info__item">
-                                                    <p class="info__sup">Заказать мебель</p>
-                                                    <a href="tel:+998{{ $abouts->phone }}"
-                                                        class="info__txt">{{ $abouts->phone }}</a>
-                                                </div>
-                                                <div class="info__item">
-                                                    <p class="info__sup">Адрес:</p>
-                                                    <p class="info__txt">
-                                                        <span class="orange__txt">
-                                                            {{ $abouts->address1 }},{{ $abouts->address2 }},{{ $abouts->address3 }}
-                                                        </span>
+                                                @if (isset($abouts->telegram_user))
+                                                    <p class="home__subtitle">
+                                                        Позвоните или напишите в
+                                                        <span class="orange__txt">Telegram</span> — cделаем
+                                                        расчет металлической конструкции за 5 минут!
                                                     </p>
-                                                </div>
+                                                    <div class="twisted">
+                                                        <a href="{{ $abouts->telegram_user }}" class="home__btn">
+                                                            <i class="bx bxl-telegram"></i> Написать в
+                                                            Telegram
+                                                        </a>
+                                                        <img class="twist"
+                                                            src="{{ asset('img/logo/twisted-arrow.svg') }}"
+                                                            alt="" />
+                                                    </div>
+                                                @endif
                                             </div>
+                                            @if (isset($abouts->phone) || isset($abouts->address1) || isset($abouts->address2) || isset($abouts->address3))
+                                                <div class="home__info">
+                                                    @if (isset($abouts->phone))
+                                                        <div class="info__item">
+                                                            <p class="info__sup">Заказать мебель</p>
+                                                            <a href="tel:+998{{ $abouts->phone }}"
+                                                                class="info__txt">{{ $abouts->phone }}</a>
+                                                        </div>
+                                                    @endif
+                                                    <div class="info__item">
+                                                        <p class="info__sup">Адрес:</p>
+                                                        <p class="info__txt">
+                                                            <span class="orange__txt">
+                                                                {{ $abouts->address1 }},{{ $abouts->address2 }},{{ $abouts->address3 }}
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="col-lg-6 col-xs-12">
                                             <div class="home__img">
@@ -281,145 +335,182 @@
         </div>
     </section>
 
-@if(isset($categories[0]))
-    <section class="categories">
-        <div class="cat__top container">
-            <h2 class="section__title cat__title">Категории продукции</h2>
-            <a href="{{ route('products') }}" class="cat__link"> Перейти в каталог </a>
-        </div>
-        <div class="cat__container">
-            {{-- @foreach ($categories as $category) --}}
-            @if (isset($categories[0]))
-                <div class="cat__item">
-                    <a href="{{ route('categories_show', ['category_id' => $categories[0]->id]) }}"
-                        class="cat__item-link">
-                        <img src="{{ asset('uploads/category/' . $categories[0]->img) }}" alt=""
-                            class="cat__pic" />
-                        <p class="cat__item-title">
-                            {{ $categories[0]->title['ru'] }} <i class="bx bxs-right-arrow"> </i>
-                        </p>
-                    </a>
-                </div>
-            @endif
-            <div class="cat__item half__life">
-                @if (isset($categories[1]))
-                    <div class="half__item">
-                        <a href="{{ route('categories_show', ['category_id' => $categories[1]->id]) }}"
+    @if (isset($categories[0]))
+        <section class="categories">
+            <div class="cat__top container">
+                <h2 class="section__title cat__title">Категории продукции</h2>
+                <a href="{{ route('products') }}" class="cat__link"> Перейти в каталог </a>
+            </div>
+            <div class="cat__container">
+                {{-- @foreach ($categories as $category) --}}
+                @if (isset($categories[0]))
+                    <div class="cat__item">
+                        <a href="{{ route('categories_show', ['category_id' => $categories[0]->id]) }}"
                             class="cat__item-link">
-                            <img src="{{ asset('uploads/category/' . $categories[1]->img) }}" alt=""
-                                class="cat__pic half__pic" />
+                            @if (isset($categories[0]->img))
+                                <img src="{{ asset('uploads/category/' . $categories[0]->img) }}" alt=""
+                                    class="cat__pic" />
+                            @endif
+                            @if (!isset($categories[0]->img))
+                                <img src="{{ asset('uploads/category/default-image-720x530.jpg') }}" alt=""
+                                    class="cat__pic half__pic" />
+                            @endif
                             <p class="cat__item-title">
-                                {{ $categories[1]->title['ru'] }} <i class="bx bxs-right-arrow"></i>
+                                {{ $categories[0]->title['ru'] }} <i class="bx bxs-right-arrow"> </i>
                             </p>
                         </a>
                     </div>
                 @endif
-                @if (isset($categories[2]))
-                <div class="half__item">
-                        <a href="{{ route('categories_show', ['category_id' => $categories[2]->id]) }}"
+                <div class="cat__item half__life">
+                    @if (isset($categories[1]))
+                        <div class="half__item">
+                            <a href="{{ route('categories_show', ['category_id' => $categories[1]->id]) }}"
+                                class="cat__item-link">
+                                @if (isset($categories[1]->img))
+                                    <img src="{{ asset('uploads/category/' . $categories[1]->img) }}" alt=""
+                                        class="cat__pic half__pic" />
+                                @endif
+                                @if (!isset($categories[1]->img))
+                                    <img src="{{ asset('uploads/category/default-image-720x530.jpg') }}"
+                                        alt="" class="cat__pic half__pic" />
+                                @endif
+                                <p class="cat__item-title">
+                                    {{ $categories[1]->title['ru'] }} <i class="bx bxs-right-arrow"></i>
+                                </p>
+                            </a>
+                        </div>
+                    @endif
+                    @if (isset($categories[2]))
+                        <div class="half__item">
+                            <a href="{{ route('categories_show', ['category_id' => $categories[2]->id]) }}"
+                                class="cat__item-link">
+                                @if (isset($categories[2]->img))
+                                    <img src="{{ asset('uploads/category/' . $categories[2]->img) }}" alt=""
+                                        class="cat__pic half__pic" />
+                                @endif
+                                @if (!isset($categories[2]->img))
+                                    <img src="{{ asset('uploads/category/default-image-720x530.jpg') }}"
+                                        alt="" class="cat__pic half__pic" />
+                                @endif
+                                <p class="cat__item-title">
+                                    {{ $categories[2]->title['ru'] }} <i class="bx bxs-right-arrow"></i>
+                                </p>
+                            </a>
+                        </div>
+                    @endif
+                </div>
+                @if (isset($categories[3]))
+                    <div class="cat__item">
+                        <a href="{{ route('categories_show', ['category_id' => $categories[3]->id]) }}"
                             class="cat__item-link">
-                            <img src="{{ asset('uploads/category/' . $categories[2]->img) }}" alt=""
-                                class="cat__pic half__pic" />
+                            @if (isset($categories[3]->img))
+                                <img src="{{ asset('uploads/category/' . $categories[3]->img) }}" alt=""
+                                    class="cat__pic" />
+                            @endif
+                            @if (!isset($categories[3]->img))
+                                <img src="{{ asset('uploads/category/default-image-720x530.jpg') }}" alt=""
+                                    class="cat__pic half__pic" />
+                            @endif
                             <p class="cat__item-title">
-                                {{ $categories[2]->title['ru'] }} <i class="bx bxs-right-arrow"></i>
+                                {{ $categories[3]->title['ru'] }} <i class="bx bxs-right-arrow"></i>
                             </p>
                         </a>
-                </div>
+                    </div>
                 @endif
+                @if (isset($categories[4]))
+                    <div class="cat__item">
+                        <a href="{{ route('categories_show', ['category_id' => $categories[4]->id]) }}"
+                            class="cat__item-link">
+                            @if (isset($categories[4]->img))
+                                <img src="{{ asset('uploads/category/' . $categories[4]->img) }}" alt=""
+                                    class="cat__pic" />
+                            @endif
+                            @if (!isset($categories[4]->img))
+                                <img src="{{ asset('uploads/category/default-image-720x530.jpg') }}" alt=""
+                                    class="cat__pic half__pic" />
+                            @endif
+                            <p class="cat__item-title">
+                                {{ $categories[4]->title['ru'] }} <i class="bx bxs-right-arrow"></i>
+                            </p>
+                        </a>
+                    </div>
+                @endif
+                {{-- @endforeach --}}
             </div>
-            @if (isset($categories[3]))
-            <div class="cat__item">
-                    <a href="{{ route('categories_show', ['category_id' => $categories[3]->id]) }}"
-                        class="cat__item-link">
-                        <img src="{{ asset('uploads/category/' . $categories[3]->img) }}" alt=""
-                            class="cat__pic" />
-                        <p class="cat__item-title">
-                            {{ $categories[3]->title['ru'] }} <i class="bx bxs-right-arrow"></i>
-                        </p>
-                    </a>
-            </div>
-            @endif
-            @if (isset($categories[4]))
-            <div class="cat__item">
-                    <a href="{{ route('categories_show', ['category_id' => $categories[4]->id]) }}"
-                        class="cat__item-link">
-                        <img src="{{ asset('uploads/category/' . $categories[4]->img) }}" alt=""
-                            class="cat__pic" />
-                        <p class="cat__item-title">
-                            {{ $categories[4]->title['ru'] }} <i class="bx bxs-right-arrow"></i>
-                        </p>
-                    </a>
-            </div>
-            @endif
-            {{-- @endforeach --}}
-        </div>
-    </section>
-@endif    
+        </section>
+    @endif
 
-@if(isset($products[0]))
-    <section class="products">
-        <div class="prod__container container">
-            <div class="prod__top">
-                <h4 class="prod__title">Продукции</h4>
-                <a href="{{ route('products') }}" class="prod__link"> Перейти в каталог </a>
-            </div>
-            <div class="prod__items">
-                {{-- @dd($products); --}}
-                @foreach ($products as $product)
-                    <div class="prod__item">
-                        <a href="{{ route('inner_page', ['id' => $product->id]) }}" class="prod__item-link">
-                            {{-- @foreach ($product->productImage as $item) --}}
-                            <div class="prod__img">
-                                @if ($product->productImage)
-                                    <img src="{{ asset($product->productImage[0]->img) }}" alt=""
-                                        class="prod__pic" />
-                                @endif
-                            </div>
-
+    @if (isset($products[0]))
+        <section class="products">
+            <div class="prod__container container">
+                <div class="prod__top">
+                    <h4 class="prod__title">Продукции</h4>
+                    <a href="{{ route('products') }}" class="prod__link"> Перейти в каталог </a>
+                </div>
+                <div class="prod__items">
+                    {{-- @dd($products); --}}
+                    @foreach ($products as $product)
+                        <div class="prod__item">
+                            <a href="{{ route('inner_page', ['id' => $product->id]) }}" class="prod__item-link">
+                                {{-- @foreach ($product->productImage as $item) --}}
+                                <div class="prod__img">
+                                    @if ($product->productImage)
+                                        <img src="{{ asset($product->productImage[0]->img) }}" alt=""
+                                            class="prod__pic" />
+                                    @endif
+                                </div>
+                            </a>
                             <div class="prod__content">
-                                <p class="prod__sup">{{ $product->title['ru'] }}</p>
-                                <p class="prod__name">{{ $product->subtitle['ru'] }}</p>
+                                @if (isset($product->title))
+                                    <p class="prod__sup">{{ $product->title['ru'] }}</p>
+                                @endif
+                                @if (isset($product->subtitle))
+                                    <p class="prod__name">{{ $product->subtitle['ru'] }}</p>
+                                @endif
                                 <div class="prod__bottom">
-                                    <p class="prod__price">
-                                        {{ $product->price }} <span class="small__txt">сум</span>
-                                    </p>
-                                    <button class="order__btn">
-                                        В корзину <i class="bx bx-cart-add"></i>
-                                    </button>
+                                    @if (isset($product->price))
+                                        <p class="prod__price">
+                                            {{ $product->price }} <span class="small__txt">сум</span>
+                                        </p>
+                                    @endif
+                                    <a href="{{ route('inner_page', ['id' => $product->id]) }}" class="order__btn">
+                                        подробнее
+                                    </a>
                                 </div>
                             </div>
                             {{-- @endforeach --}}
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
+    @if (isset($abouts->telegram_user))
+        <section class="order">
+            <div class="order__container container">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        <h2 class="order__title">
+                            У Вас есть <br />
+                            индивидуальный заказ?
+                        </h2>
+                        <p class="order__txt">
+                            Позвоните или напишите в
+                            <span class="orange__txt">Telegram</span> — cделаем расчет <br />
+                            металлической конструкции за 5 минут!
+                        </p>
+                        <a href="{{ $abouts->telegram_user }}" class="home__btn aespa__btn">
+                            <i class="bx bxl-telegram"></i> Написать в Telegram
                         </a>
                     </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-@endif
-
-    <section class="order">
-        <div class="order__container container">
-            <div class="row">
-                <div class="col-md-6 col-xs-12">
-                    <h2 class="order__title">
-                        У Вас есть <br />
-                        индивидуальный заказ?
-                    </h2>
-                    <p class="order__txt">
-                        Позвоните или напишите в
-                        <span class="orange__txt">Telegram</span> — cделаем расчет <br />
-                        металлической конструкции за 5 минут!
-                    </p>
-                    <a href="{{ $abouts->telegram1 }}" class="home__btn aespa__btn">
-                        <i class="bx bxl-telegram"></i> Написать в Telegram
-                    </a>
-                </div>
-                <div class="col-md-6 col-xs-12 mamba">
-                    <img src="{{ asset('img/home.png') }}" alt="" class="order__pic" />
+                    <div class="col-md-6 col-xs-12 mamba">
+                        <img src="{{ asset('img/home.png') }}" alt="" class="order__pic" />
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
 
 
@@ -444,50 +535,52 @@
                         </li>
                         <li>
                             <a class="footer__link @if (request()->is('abouts') || request()->is('abouts/*')) active @endif"
-                                href="{{ route('about_company') }}"> О компании </a>
+                                href="{{ route('about_company') }}"> О нас </a>
                         </li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-xs-12">
-                    <ul class="footer__links">
-                        <h4 class="foot__lil-title">Категории</h4>
-                        <li>
-                            @if (isset($categories[0]))
-                                <a class="footer__link"
-                                    href="{{ route('categories_show', ['category_id' => $categories[0]->id]) }}">
-                                    {{ $categories[0]->title['ru'] }} </a>
-                            @endif
-                        </li>
-                        <li>
-                            @if (isset($categories[1]))
-                                <a class="footer__link"
-                                    href="{{ route('categories_show', ['category_id' => $categories[1]->id]) }}">
-                                    {{ $categories[1]->title['ru'] }} </a>
-                            @endif
-                        </li>
-                        <li>
-                            @if (isset($categories[2]))
-                                <a class="footer__link"
-                                    href="{{ route('categories_show', ['category_id' => $categories[2]->id]) }}">
-                                    {{ $categories[2]->title['ru'] }} </a>
-                            @endif
-                        </li>
-                        <li>
-                            @if (isset($categories[3]))
-                                <a class="footer__link"
-                                    href="{{ route('categories_show', ['category_id' => $categories[3]->id]) }}">
-                                    {{ $categories[3]->title['ru'] }} </a>
-                            @endif
-                        </li>
-                        <li>
-                            @if (isset($categories[4]))
-                                <a class="footer__link"
-                                    href="{{ route('categories_show', ['category_id' => $categories[4]->id]) }}">
-                                    {{ $categories[4]->title['ru'] }} </a>
-                            @endif
-                        </li>
-                    </ul>
-                </div>
+                @if (isset($categories[0]))
+                    <div class="col-lg-2 col-xs-12">
+                        <ul class="footer__links">
+                            <h4 class="foot__lil-title">Категории</h4>
+                            <li>
+                                @if (isset($categories[0]))
+                                    <a class="footer__link"
+                                        href="{{ route('categories_show', ['category_id' => $categories[0]->id]) }}">
+                                        {{ $categories[0]->title['ru'] }} </a>
+                                @endif
+                            </li>
+                            <li>
+                                @if (isset($categories[1]))
+                                    <a class="footer__link"
+                                        href="{{ route('categories_show', ['category_id' => $categories[1]->id]) }}">
+                                        {{ $categories[1]->title['ru'] }} </a>
+                                @endif
+                            </li>
+                            <li>
+                                @if (isset($categories[2]))
+                                    <a class="footer__link"
+                                        href="{{ route('categories_show', ['category_id' => $categories[2]->id]) }}">
+                                        {{ $categories[2]->title['ru'] }} </a>
+                                @endif
+                            </li>
+                            <li>
+                                @if (isset($categories[3]))
+                                    <a class="footer__link"
+                                        href="{{ route('categories_show', ['category_id' => $categories[3]->id]) }}">
+                                        {{ $categories[3]->title['ru'] }} </a>
+                                @endif
+                            </li>
+                            <li>
+                                @if (isset($categories[4]))
+                                    <a class="footer__link"
+                                        href="{{ route('categories_show', ['category_id' => $categories[4]->id]) }}">
+                                        {{ $categories[4]->title['ru'] }} </a>
+                                @endif
+                            </li>
+                        </ul>
+                    </div>
+                @endif
                 <div class="col-lg-4 col-xs-12 foot__brand">
                     <div class="about__header">
                         <img src="{{ asset('img/logo/brand.svg') }}" alt="" class="about__img" />
@@ -499,26 +592,36 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-xs-12 centered">
-                    <div class="info__item">
-                        <p class="info__sup">Для связи:</p>
-                        <a class="foot-info__txt" href="tel:+998{{ $abouts->phone }}">{{ $abouts->phone }}</a>
-                    </div>
-                    <div class="info__item">
-                        <p class="info__sup">Адрес:</p>
-                        <p class="foot-info__txt">
-                            {{ $abouts->address1 }},{{ $abouts->address2 }},{{ $abouts->address3 }}</p>
-                    </div>
-                    <div class="info__item">
-                        <p class="info__sup">Социальные сети:</p>
-                        <div class="socials">
-                            <a class="foot-info__txt social" href="{{ $abouts->telegram_link }}">
-                                <i class="bx bxl-telegram"></i>
-                            </a>
-                            <a class="foot-info__txt social" href="{{ $abouts->instagram }}">
-                                <i class="bx bxl-instagram"></i>
-                            </a>
+                    @if (isset($abouts->phone))
+                        <div class="info__item">
+                            <p class="info__sup">Для связи:</p>
+                            <a class="foot-info__txt" href="tel:+998{{ $abouts->phone }}">{{ $abouts->phone }}</a>
                         </div>
-                    </div>
+                    @endif
+                    @if (isset($abouts->address1) || isset($abouts->address2) || isset($abouts->address3))
+                        <div class="info__item">
+                            <p class="info__sup">Адрес:</p>
+                            <p class="foot-info__txt">
+                                {{ $abouts->address1 }} , {{ $abouts->address2 }} , {{ $abouts->address3 }}</p>
+                        </div>
+                    @endif
+                    @if (isset($abouts->telegram_link) || isset($abouts->instagram))
+                        <div class="info__item">
+                            <p class="info__sup">Социальные сети:</p>
+                            <div class="socials">
+                                @if (isset($abouts->telegram_link))
+                                    <a class="foot-info__txt social" href="{{ $abouts->telegram_link }}">
+                                        <i class="bx bxl-telegram"></i>
+                                    </a>
+                                @endif
+                                @if (isset($abouts->instagram))
+                                    <a class="foot-info__txt social" href="{{ $abouts->instagram }}">
+                                        <i class="bx bxl-instagram"></i>
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="footer__bottom">
@@ -535,6 +638,7 @@
     <script src="{{ asset('https://unpkg.com/swiper@8/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('https://unpkg.com/aos@2.3.1/dist/aos.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('app/notyf.min.js') }}"></script>
 </body>
 
 </html>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Dastavka;
 use App\Models\Lang;
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -22,10 +23,12 @@ class ProductController extends Controller
         $products = Product::with('category')
             ->paginate(10);
         $categories = Category::all();
+        $dast = Dastavka::all()->firstOrFail();
 
-        return view('app.product.index',compact(
+        return view('app.product.index', compact(
             'products',
-            'categories'
+            'categories',
+            'dast'
         ));
     }
 
@@ -40,10 +43,11 @@ class ProductController extends Controller
         $languages = Lang::all();
         $products = Product::all();
 
-        return view('app.product.create',compact(
+        return view('app.product.create', compact(
             'categories',
             'products',
-            'languages'));
+            'languages'
+        ));
     }
 
     /**
@@ -52,46 +56,63 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+        ]);
+
+        $product = Product::find($request->id);
+        $item = $request->file('img');
+        if ($request->hasFile('img')) {
+            $image_name = md5(rand(1000, 10000));
+            $ext = strtolower($item->getClientOriginalExtension());
+            $image_full_name = $image_name . '.' . $ext;
+            $uploade_path = 'upload/product_image/';
+            $image_url = $uploade_path . $image_full_name;
+            $item->move($uploade_path, $image_full_name);
+
+            ProductImage::create([
+                'img' => $image_url,
+                'product_id' => $product->id
+            ]);
+
+            return redirect()->back()->with('message', 'Image Upload Successfully');
+        }
+        return redirect()->back()->withErrors('message', 'Image Upload Error');
+    }
+
     public function store(Request $request)
     {
         $data = $request->all();
         $request->validate([
+            'title.ru' => 'required|max:255',
             'title' => 'required',
-            'category_id' => 'required',
+            // 'category_id' => 'required',
             'img.*' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
             'img' => 'required'
-         ]);
+        ]);
 
-        // $product = new Product();
-        // $product->category_id = $request->input('category_id');
-        // $product->title = $request->input('title');
-        // $product->subtitle = $request->input('subtitle');
-        // $product->brand = $request->input('brand');
-        // $product->left = $request->input('left');
-        // $product->price = $request->input('price');
-        // $product->desc = $request->input('desc');
-        // $product->info = $request->input('info');
-        // $product->save();
-        //  dd($request->all());
         $product = Product::create($data);
-        if($request->hasFile('img')){
-            foreach($request->file('img') as $item){
-                $image_name = md5(rand(1000,10000));
+        if ($request->hasFile('img')) {
+            foreach ($request->file('img') as $item) {
+                $image_name = md5(rand(1000, 10000));
                 $ext = strtolower($item->getClientOriginalExtension());
-                $image_full_name = $image_name.'.'.$ext;
+                $image_full_name = $image_name . '.' . $ext;
                 $uploade_path = 'upload/product_image/';
-                $image_url = $uploade_path.$image_full_name;
-                $item->move($uploade_path,$image_full_name);
+                $image_url = $uploade_path . $image_full_name;
+                $item->move($uploade_path, $image_full_name);
 
                 ProductImage::create([
                     'img' => $image_url,
                     'product_id' => $product->id
                 ]);
             }
-        
-        return redirect()->route('products.index')->with('message','Product Added Successfully');
+
+            return redirect()->route('products.index')->with('message', 'Product Added Successfully');
+        }
     }
-}
 
     /**
      * Display the specified resource.
@@ -115,12 +136,14 @@ class ProductController extends Controller
     public function edit($id)
     {
         $categories = Category::all();
-        $product = Product::find($id);
+        $product = Product::with('productImage')->findOrFail($id);
         $languages = Lang::all();
-        return view('app.product.edit',compact(
+        // $image = ProductImage::all();
+        return view('app.product.edit', compact(
             'product',
             'categories',
-            'languages'
+            'languages',
+            // 'image'
         ));
     }
 
@@ -134,11 +157,11 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required',
+            'title.ru' => 'required',
             'category_id' => 'required',
-            'img.*' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'img' => 'required'
-         ]);
+            // 'img.*' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'img' => 'required'
+        ]);
 
         $product =  Product::find($id);
         $product->category_id = $request->input('category_id');
@@ -149,36 +172,35 @@ class ProductController extends Controller
         $product->price = $request->input('price');
         $product->desc = $request->input('desc');
         $product->info = $request->input('info');
-        if($request->hasfile('img'))
-        {
-            $destination = 'uploads/product_image/'.$product->img;
-            if(File::exists($destination)){
-                File::delete($destination);
-            }
-            // $file = $request->file('img');
-            // $extention = $file->getClientOriginalExtension();
-            // $filename = time().'.'.$extention;
-            // $file->move('uploads/product_image/', $filename);
-            // $product->img = $filename;
-            foreach($request->file('img') as $item){
-                $image_name = md5(rand(1000,10000));
-                $ext = strtolower($item->getClientOriginalExtension());
-                $image_full_name = $image_name.'.'.$ext;
-                $uploade_path = 'upload/product_image/';
-                $image_url = $uploade_path.$image_full_name;
-                $item->move($uploade_path,$image_full_name);
+        // if ($request->hasfile('img')) {
+        //     $destination = 'uploads/product_image/' . $product->img;
+        //     if (File::exists($destination)) {
+        //         File::delete($destination);
+        //     }
+        //     // $file = $request->file('img');
+        //     // $extention = $file->getClientOriginalExtension();
+        //     // $filename = time().'.'.$extention;
+        //     // $file->move('uploads/product_image/', $filename);
+        //     // $product->img = $filename;
+        //     foreach ($request->file('img') as $item) {
+        //         $image_name = md5(rand(1000, 10000));
+        //         $ext = strtolower($item->getClientOriginalExtension());
+        //         $image_full_name = $image_name . '.' . $ext;
+        //         $uploade_path = 'upload/product_image/';
+        //         $image_url = $uploade_path . $image_full_name;
+        //         $item->move($uploade_path, $image_full_name);
 
-            
-            ProductImage::updated([
-                'img' => $image_url,
-                'product_id' => $product->id
-            ]);
-        }
-        $product->update();
 
-        return redirect()->route('products.index')->with('message','Product Edit Successfully');
+        //         ProductImage::updated([
+        //             'img' => $image_url,
+        //             'product_id' => $product->id
+        //         ]);
+        //     }
+            $product->update();
+
+            return redirect()->route('products.index')->with('message', 'Product Edit Successfully');
+        
     }
-}
 
     /**
      * Remove the specified resource from storage.
@@ -189,31 +211,35 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $products = Product::find($id);
-        $destination = 'uploads/product/'.$products->img;
-        if(File::exists($destination)){
+        $destination = 'uploads/product/' . $products->img;
+        if (File::exists($destination)) {
             File::delete($destination);
         }
         $products->delete();
-        return back()->with('message','Product Delete Successfully');
+        return back()->with('message', 'Product Delete Successfully');
     }
 
-    public function products($category_id = null){
+    public function products($category_id = null)
+    {
         $products = Product::all();
-        $categories = Category::all();  
+        $categories = Category::all();
         if ($category_id) {
-            $products = Product::where('category_id',
-             $category_id
-             )->get();
+            $products = Product::where(
+                'category_id',
+                $category_id
+            )->get();
         }
-        
-        return view('main.products',compact(
+
+        return view('main.products', compact(
             'products',
-            'categories'));
+            'categories'
+        ));
     }
 
-    public function shows($id){
+    public function shows($id)
+    {
         $item = Product::find($id);
         $pro = Product::all();
-        return view('main.show',compact('item','pro'));
+        return view('main.show', compact('item', 'pro'));
     }
 }

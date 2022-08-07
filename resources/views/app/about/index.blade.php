@@ -4,7 +4,12 @@
 
     <h1 class="text-uppercase mb-4">about</h1>
 
-    <a href="{{ route('abouts.create') }}" class="btn btn-success mb-3 text-white">Add about</a>
+    @if (count($about) <= 0)
+      <a href="{{ route('abouts.create') }}" class="btn btn-success mb-3 text-white">Add about</a>
+    @endif
+
+    
+
     <div class="card border-0 shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
@@ -12,7 +17,7 @@
                     <thead class="thead-light">
                     <tr>
                         <th class="border-0 rounded-start">#</th>
-                        <th class="border-0">Phone</th>
+                        {{-- <th class="border-0">Phone</th> --}}
                         <th class="border-0">First Image</th>
                         <th class="border-0">Second Image</th>
                         <th class="border-0">Third  Image</th>
@@ -24,7 +29,7 @@
                         <!-- Item -->
                         <tr>
                             <td><a href="#" class="text-primary fw-bold">{{ ($about ->currentpage()-1) * $about ->perpage() + $loop->index + 1 }}</a></td>
-                            <td class="fw-bold">{{ $item->phone }}</td>
+                            {{-- <td class="fw-bold">{{ $item->phone }}</td> --}}
                             <td>
                                     <img src="{{asset('uploads/about/'.$item->img1)}}" alt="" style="max-width: 250px">
                             </td>

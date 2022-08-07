@@ -15,7 +15,16 @@ class Order extends Model
         'city',
         'address',
         'role',
-        'how_to_buy'
- ];
- 
+        'payment_method',
+        'with_delivery'
+    ];
+
+    protected $casts = [
+        'products' => 'array'
+    ];
+
+    public function order_products()
+    {
+        return $this->belongsToMany(Product::class,'order_products');
+    }
 }

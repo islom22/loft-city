@@ -36,36 +36,36 @@
                                             <!-- Form -->
                                             <div class="mb-4">
                                                 <label for="email">Name</label>
-                                                <input type="text" class="form-control" name="name" placeholder="name" value="{{ $order->name }}">
+                                                <input type="text" class="form-control" name="name" placeholder="name" value="{{ old('name',$order->name) }}">
                                             </div>
                                             <div class="mb-4">
                                                 <label for="email">Phone</label>
-                                                <input type="text" class="form-control" name="phone" placeholder="phone" value="{{ $order->phone }}">
+                                                <input type="text" class="form-control" name="phone" placeholder="phone" value="{{ old('phone',$order->phone) }}">
                                             </div>
                                             <div class="mb-4">
                                                 <label for="email">Email</label>
-                                                <input type="email" class="form-control" name="email" placeholder="email" value="{{ $order->email }}">
+                                                <input type="email" class="form-control" name="email" placeholder="email" value="{{ old('email',$order->email) }}">
                                             </div>
                                             <div class="mb-4">
                                                 <label for="email">City</label>
-                                                <input type="text" class="form-control" name="city" placeholder="city" value="{{ $order->city }}">
+                                                <input type="text" class="form-control" name="city" placeholder="city" value="{{ old('city',$order->city)}}">
                                             </div>
                                             <div class="mb-4">
                                                 <label for="email">Address</label>
-                                                <input type="text" class="form-control" name="address" placeholder="address" value="{{ $order->address }}">
+                                                <input type="text" class="form-control" name="address" placeholder="address" value="{{ old('address',$order->address) }}">
                                             </div>
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput1" class="fs-6 fw-bold mb-2">Role</label>
-                                                <select class="form-select" aria-label="" name="role" value="{{ $order->role }}" data-control="select2" data-hide-search="true">
-                                                    <option value="Наличка">Наличка</option>
-                                                    <option value="С картой" >С картой</option>
+                                                <label for="exampleFormControlInput1" class="fs-6 fw-bold mb-2">Payment method</label>
+                                                <select class="form-select" aria-label="" name="payment_method" data-control="select2" data-hide-search="true">
+                                                    <option value="cash" {{ old('payment_method', $order->payment_method) == 'cash' ? 'selected' : '' }}>Наличка</option>
+                                                    <option value="card" {{ old('payment_method', $order->payment_method) == 'card' ? 'selected' : '' }}>С картой</option>
                                                 </select>
                                             </div>
                                             <div class="mb-4">
                                                 <label for="exampleFormControlInput2" class="fs-6 fw-bold mb-2">How_to_buy</label>
-                                                <select class="form-select" aria-label="" name="how_to_buy" value="{{ $order->payment }}" data-control="select2" data-hide-search="true">
-                                                    <option value="Забрать от шоу рума">Забрать от шоу рума</option>
-                                                    <option value="С доставкой?" >С доставкой?</option>
+                                                <select class="form-select" aria-label="" name="with_delivery"  data-control="select2" data-hide-search="true">
+                                                    <option value="Забрать от шоу рума" {{ old('with_delivery', $order->with_delivery) == 'Забрать от шоу рума' ? 'selected' : '' }}>Забрать от шоу рума</option>
+                                                    <option value="С доставкой?" {{ old('with_delivery', $order->with_delivery) == 'С доставкой?' ? 'selected' : '' }}>С доставкой?</option>
                                                 </select>
                                             </div>
                                             <!-- End of Form -->
