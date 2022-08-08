@@ -220,7 +220,7 @@
                         <div class="info__item">
                             <p class="info__sup">Адрес:</p>
                             <p class="foot-info__txt">
-                                {{ $abouts->address1 }},{{ $abouts->address2 }},{{ $abouts->address3 }}</p>
+                                {{ $abouts->address1 ? $abouts->address1 : '' }} {{ $abouts->address2 ? ', '.$abouts->address2 : '' }} {{ $abouts->address3 ? ', '.$abouts->address3 : '' }}</p>
                         </div>
                     @endif
                     @if (isset($abouts->telegram_link) ||  isset($abouts->instagram ))
