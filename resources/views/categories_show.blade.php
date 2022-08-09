@@ -62,8 +62,8 @@
             }
 
             /*.row{
-                                  width: initial !important;
-                                }*/
+                                      width: initial !important;
+                                    }*/
             .primary-sidebar-inner {
                 width: 100% !important;
             }
@@ -142,8 +142,16 @@
 
                                         {{-- @foreach ($product->productImage as $item) --}}
                                         <div class="prod__img">
-                                            <img src="{{ asset($product->productImage()->exists() ? $product->productImage[0]->img : '') }}"
-                                                alt="" class="prod__pic" />
+                                            @if (isset($product->productImage[0]->img))
+                                                <img src="{{ asset($product->productImage[0]->img) }}" alt=""
+                                                    class="prod__pic" />
+                                            @endif
+                                            @if (!isset($product->productImage[0]->img))
+                                                <img src="{{ asset('upload/product_image/default-image-720x530.jpg') }}"
+                                                    alt="" class="prod__pic" />
+                                            @endif
+                                            {{-- <img src="{{ asset($product->productImage()->exists() ? $product->productImage[0]->img : '') }}"
+                                                alt="" class="prod__pic" /> --}}
                                         </div>
 
                                         <div class="prod__content">

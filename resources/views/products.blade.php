@@ -53,8 +53,8 @@
             }
 
             /*.row{
-                          width: initial !important;
-                        }*/
+                              width: initial !important;
+                            }*/
             .primary-sidebar-inner {
                 width: 100% !important;
             }
@@ -187,18 +187,26 @@
                         <div class="card border-0">
                         </div>
                         <!-- <div class="d-flex mb-6">
-                                        <div class="d-flex align-items-center text-primary">
-                                            Showing 1-15 of 90 results
-                                        </div>
-                                    </div> -->
+                                            <div class="d-flex align-items-center text-primary">
+                                                Showing 1-15 of 90 results
+                                            </div>
+                                        </div> -->
                         <div class="prod__items inner-items">
                             @foreach ($products as $product)
                                 <div class="prod__item">
                                     <a href="{{ route('inner_page', ['id' => $product->id]) }}" class="prod__item-link">
 
                                         <div class="prod__img">
-                                            <img src="{{ asset($product->productImage[0]->img) }}" alt=""
-                                                class="prod__pic" />
+                                            @if (isset($product->productImage[0]->img))
+                                                <img src="{{ asset($product->productImage[0]->img) }}" alt=""
+                                                    class="prod__pic" />
+                                            @endif
+                                            @if (!isset($product->productImage[0]->img))
+                                                <img src="{{ asset('upload/product_image/default-image-720x530.jpg') }}"
+                                                    alt="" class="prod__pic" />
+                                            @endif
+                                            {{-- <img src="{{ asset($product->productImage[0]->img) }}" alt=""
+                                                class="prod__pic" /> --}}
                                         </div>
 
                                         <div class="prod__content">

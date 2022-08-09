@@ -178,8 +178,11 @@
                                                         <i class="bx bx-x"></i>
                                                     </button>
                                                     <div class="reservation__second__half__image__wrapper">
-                                                        @if ($product->productImage)
+                                                        @if (isset($product->productImage[0]))
                                                             <img src="{{ asset($product->productImage[0]->img) }}"
+                                                                alt="form__img" />
+                                                        @else
+                                                            <img src="{{ asset('upload/product_image/default-image-720x530.jpg') }}"
                                                                 alt="form__img" />
                                                         @endif
                                                     </div>
@@ -223,9 +226,9 @@
                                         </h3>
                                     </div>
 
-                                    <div id="total_price_without_delivery" >
+                                    <div id="total_price_without_delivery">
 
-                                        <h3>{{ $price  }} <span class="small__txt">сум</span>
+                                        <h3>{{ $price }} <span class="small__txt">сум</span>
                                         </h3>
                                     </div>
 
@@ -295,8 +298,6 @@
             document.getElementById('total_price_without_delivery').classList.remove('d-none');
             document.getElementById('total_price_with_delivery').classList.add('d-none');
         });
-
-
     </script>
     <script>
         let burger = document.getElementById("burger")

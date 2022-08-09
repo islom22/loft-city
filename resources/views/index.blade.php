@@ -85,7 +85,8 @@
                 <div class="row">
                     <div class="col-1 d-flex align-items-center pe-0">
                         <a href="{{ route('index') }}" class="nav__brand">
-                            <img width="100%" class="brand" src="{{ asset('img/logo/brand.svg') }}" alt="" />
+                            <img width="100%" class="brand" src="{{ asset('img/logo/brand.svg') }}"
+                                alt="" />
                         </a>
                     </div>
                     <div class="col-11 nav__collapse">
@@ -353,7 +354,7 @@
                             @endif
                             @if (!isset($categories[0]->img))
                                 <img src="{{ asset('uploads/category/default-image-720x530.jpg') }}" alt=""
-                                    class="cat__pic half__pic" />
+                                    class="cat__pic" />
                             @endif
                             <p class="cat__item-title">
                                 {{ $categories[0]->title['ru'] }} <i class="bx bxs-right-arrow"> </i>
@@ -409,7 +410,7 @@
                             @endif
                             @if (!isset($categories[3]->img))
                                 <img src="{{ asset('uploads/category/default-image-720x530.jpg') }}" alt=""
-                                    class="cat__pic half__pic" />
+                                    class="cat__pic" />
                             @endif
                             <p class="cat__item-title">
                                 {{ $categories[3]->title['ru'] }} <i class="bx bxs-right-arrow"></i>
@@ -427,7 +428,7 @@
                             @endif
                             @if (!isset($categories[4]->img))
                                 <img src="{{ asset('uploads/category/default-image-720x530.jpg') }}" alt=""
-                                    class="cat__pic half__pic" />
+                                    class="cat__pic" />
                             @endif
                             <p class="cat__item-title">
                                 {{ $categories[4]->title['ru'] }} <i class="bx bxs-right-arrow"></i>
@@ -454,9 +455,13 @@
                             <a href="{{ route('inner_page', ['id' => $product->id]) }}" class="prod__item-link">
                                 {{-- @foreach ($product->productImage as $item) --}}
                                 <div class="prod__img">
-                                    @if ($product->productImage)
+                                    @if (isset($product->productImage[0]->img))
                                         <img src="{{ asset($product->productImage[0]->img) }}" alt=""
                                             class="prod__pic" />
+                                    @endif
+                                    @if (!isset($product->productImage[0]->img))
+                                        <img src="{{ asset('upload/product_image/default-image-720x530.jpg') }}"
+                                            alt="" class="prod__pic" />
                                     @endif
                                 </div>
                             </a>
@@ -602,7 +607,9 @@
                         <div class="info__item">
                             <p class="info__sup">Адрес:</p>
                             <p class="foot-info__txt">
-                                {{ $abouts->address1 ? $abouts->address1 : '' }} {{ $abouts->address2 ? ', '.$abouts->address2 : '' }} {{ $abouts->address3 ? ', '.$abouts->address3 : '' }}</p>
+                                {{ $abouts->address1 ? $abouts->address1 : '' }}
+                                {{ $abouts->address2 ? ', ' . $abouts->address2 : '' }}
+                                {{ $abouts->address3 ? ', ' . $abouts->address3 : '' }}</p>
                         </div>
                     @endif
                     @if (isset($abouts->telegram_link) || isset($abouts->instagram))

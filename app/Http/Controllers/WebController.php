@@ -68,7 +68,11 @@ class    WebController extends Controller
       $images = ProductImage::find($id);
       $categories = Category::all();
       $abouts = About::latest()->first();
-      $admins = Product::with('productImage', 'category')->paginate(5);
+      // $admins = Product::with('productImage', 'category')->paginate(5);
+      $admins = Product::where('id', '!=', $id)
+      ->where('category_id',$products->category_id)
+      ->take(4)
+      ->get();
       $files = File::latest()->first();
       return view('inner_page', compact(
          'products',
@@ -226,7 +230,7 @@ class    WebController extends Controller
          'products' => $products,
          'categories' => $categories,
          'dast' => $dast,
-         'message' => 'Заказ оформлен! Скоро с вами свяжемся'
+         'message' => 'Dastavka Upload Successfully'
       ]);
    }
 

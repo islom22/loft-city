@@ -121,12 +121,12 @@
                         </div>
                         <div class="mb-4">
                             <label for="">Price</label>
-                            <input type="integer" id="price{{ $key }}" class="form-control" name="price"
+                            <input type="number" id="price{{ $key }}" class="form-control" name="price"
                                 placeholder="price" value="{{ old('price', $product->price) }}">
                         </div>
                         <div class="mb-4">
                             <label for="subtitle">Left</label>
-                            <input type="integer" id="left{{ $key }}" class="form-control" name="left"
+                            <input type="number" id="left{{ $key }}" class="form-control" name="left"
                                 placeholder="left" value="{{ old('left', $product->left) }}">
                         </div>
                         <div class="mb-4">
@@ -140,7 +140,7 @@
                                 onchange="selectValue(this,{{ $key }})"
                                 id="exampleFormControlSelect{{ $key }}">
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->title['ru'] }}
+                                    <option value="{{ $category->id }}">{{ $category->title['ru']  }}
                                     </option>
                                 @endforeach
                             </select>

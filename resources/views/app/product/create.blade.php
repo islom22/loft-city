@@ -93,14 +93,14 @@
                                     <div class="form-group mb-3">
                                         <label for="">Price</label>
                                         {{-- <input type="text" name="subtitle" class="form-control" value="{{ old('subtitle') }}"> --}}
-                                        <input type="integer" class="form-control" id="price{{ $key }}"
+                                        <input type="number" class="form-control" id="price{{ $key }}"
                                             onchange="Price(this,{{ $key }})" name="price"
                                             placeholder="price" value="{{ old('price'.'--')  }}">
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="">Left</label>
                                         {{-- <input type="text" name="subtitle" class="form-control" value="{{ old('subtitle') }}"> --}}
-                                        <input type="integer" class="form-control" id="left{{ $key }}"
+                                        <input type="number" class="form-control" id="left{{ $key }}"
                                             onchange="Left(this,{{ $key }})" name="left"
                                             placeholder="left" value="{{ old('left') }}">
                                     </div>

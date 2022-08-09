@@ -277,33 +277,82 @@
                     </div>
                 @endif
                 <div class="widher">
-                    <div class="swiper mySwiper2">
-                        <div class="swiper-wrapper">
-                            @foreach ($products->productImage as $product)
+                    @if (isset($products->productImage[0]))
+                        <div class="swiper mySwiper2">
+                            <div class="swiper-wrapper">
+                                @foreach ($products->productImage as $product)
+                                    <div class="swiper-slide">
+                                        <div class="slider__container">
+                                            <a data-fslightbox="gallery" {{-- href="https://loftcity.uz/upload/product_image/f4661398cb1a3abd3ffe58600bf11322.jpg" --}}>
+                                                <div>
+                                                    <img src="{{ asset($product->img) }}" />
+
+                                                    {{-- <img
+                                                        src="{{ asset('upload/product_image/default-image-720x530.jpg') }}" /> --}}
+
+                                                    {{-- <img src="{{ asset($product->img) }}" /> --}}
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @else
+                        <div class="swiper mySwiper2">
+                            <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <div class="slider__container">
                                         <a data-fslightbox="gallery" {{-- href="https://loftcity.uz/upload/product_image/f4661398cb1a3abd3ffe58600bf11322.jpg" --}}>
                                             <div>
-                                                <img src="{{ asset($product->img) }}" />
+                                                {{-- <img src="{{ asset($product->img) }}" /> --}}
+
+                                                <img src="{{ asset('upload/product_image/default-image-720x530.jpg') }}" />
+
+                                                {{-- <img src="{{ asset($product->img) }}" /> --}}
                                             </div>
                                         </a>
                                     </div>
                                 </div>
-                            @endforeach
+                            </div>
                         </div>
-                    </div>
+                    @endif
                     <div thumbsSlider="" class="swiper mySwiper">
-                        <div class="swiper-wrapper">
-                            @foreach ($products->productImage as $product)
-                                <div class="swiper-slide">
-                                    <a data-fslightbox="gallery" {{-- href="https://loftcity.uz/upload/product_image/f4661398cb1a3abd3ffe58600bf11322.jpg" --}}>
-                                        <div>
-                                            <img src="{{ asset($product->img) }}" />
-                                        </div>
-                                    </a>
-                                </div>
-                            @endforeach
-                        </div>
+                        @if (isset($products->productImage[0]))
+                            <div class="swiper-wrapper">
+                                @foreach ($products->productImage as $product)
+                                    <div class="swiper-slide">
+                                        <a data-fslightbox="gallery" {{-- href="https://loftcity.uz/upload/product_image/f4661398cb1a3abd3ffe58600bf11322.jpg" --}}>
+                                            <div>
+                                                {{-- @if (isset($product->img)) --}}
+                                                    <img src="{{ asset($product->img) }}" />
+                                                {{-- @endif --}}
+                                                {{-- @if (!isset($product->img))
+                                                    <img
+                                                        src="{{ asset('upload/product_image/default-image-720x530.jpg') }}" />
+                                                @endif --}}
+                                                {{-- <img src="{{ asset($product->img) }}" /> --}}
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <a data-fslightbox="gallery" {{-- href="https://loftcity.uz/upload/product_image/f4661398cb1a3abd3ffe58600bf11322.jpg" --}}>
+                                            <div>
+
+                                                {{-- @if (!isset($product->img)) --}}
+                                                    <img
+                                                        src="{{ asset('upload/product_image/default-image-720x530.jpg') }}" />
+                                                {{-- @endif --}}
+                                                {{-- <img src="{{ asset($product->img) }}" /> --}}
+                                            </div>
+                                        </a>
+                                    </div>
+                            </div>
+                        @endif    
                     </div>
                 </div>
                 <div class="grid__sec__half">
@@ -409,10 +458,18 @@
                                 <div class="prod__item">
                                     <a href="{{ route('inner_page', ['id' => $product->id]) }}" class="prod__item-link">
                                         <div class="prod__img">
-                                            @if ($product->productImage)
+                                            @if (isset($product->productImage[0]->img))
                                                 <img src="{{ asset($product->productImage[0]->img) }}" alt=""
                                                     class="prod__pic" />
                                             @endif
+                                            @if (!isset($product->productImage[0]->img))
+                                                <img src="{{ asset('upload/product_image/default-image-720x530.jpg') }}"
+                                                    alt="" class="prod__pic" />
+                                            @endif
+                                            {{-- @if ($product->productImage)
+                                                <img src="{{ asset($product->productImage[0]->img) }}" alt=""
+                                                    class="prod__pic" />
+                                            @endif --}}
                                         </div>
 
                                         <div class="prod__content">

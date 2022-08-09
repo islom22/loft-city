@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('dastavkas', function (Blueprint $table) {
             $table->id();
-            $table->string('dastavka');
+            $table->text('dastavka');
             $table->timestamps();
         });
     }

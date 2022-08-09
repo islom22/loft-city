@@ -50,6 +50,100 @@
                 justify-content: center;
                 color: white;
             }
+
+            body {
+                overflow-x: hidden !important;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            p,
+            a {
+                font-family: "Inter" !important;
+            }
+
+            .btn {
+                width: 40% !important;
+            }
+
+            .like__card__grid {
+                margin-bottom: 120px;
+            }
+
+            .swiper-slide {
+                /*height: 600px !important;*/
+            }
+
+            .mySwiper .swiper-slide {
+                height: 150px !important;
+            }
+
+            .fslightbox-source {
+                width: 500px !important;
+                height: auto !important;
+                object-fit: contain !important;
+            }
+
+            .slider__grid {
+                grid-template-columns: 20% 40% 35%;
+                gap: 2rem;
+            }
+
+            .card-title {
+                font-size: 32px !important;
+                font-weight: 700;
+            }
+
+            .name {
+                font-size: 48px;
+                font-weight: 800;
+            }
+
+            .sider {
+                background: #f7f7f7;
+                padding: 32px;
+            }
+
+            @media screen and (max-width: 992px) {
+                .slider__grid {
+                    grid-template-columns: repeat(1, 1fr);
+                }
+
+                .swiper-slide img {
+                    width: initial !important;
+                    height: initial !important;
+                }
+
+                .btn {
+                    width: 300px !important;
+                }
+
+                .widher {
+                    width: 500px !important;
+                }
+            }
+
+            @media screen and (max-width: 767px) {
+                .widher {
+                    width: 370px !important;
+                }
+            }
+
+            @media screen and (max-width: 400px) {
+                .widher {
+                    width: 280px !important;
+                }
+
+                .swiper-slide {
+                    height: auto !important;
+                }
+
+                .btn {
+                    width: 200px !important;
+                }
+            }
         </style>
     @else
         <style>
@@ -117,7 +211,7 @@
 
                                 </a>
                             </div>
-                            @if (isset($abouts->phone ))
+                            @if (isset($abouts->phone))
                                 <div class="nav__num">
                                     <p>Заказать мебель</p>
                                     <a href="tel:+998{{ $abouts->phone }}">{{ $abouts->phone }}</a>
@@ -220,22 +314,24 @@
                         <div class="info__item">
                             <p class="info__sup">Адрес:</p>
                             <p class="foot-info__txt">
-                                {{ $abouts->address1 ? $abouts->address1 : '' }} {{ $abouts->address2 ? ', '.$abouts->address2 : '' }} {{ $abouts->address3 ? ', '.$abouts->address3 : '' }}</p>
+                                {{ $abouts->address1 ? $abouts->address1 : '' }}
+                                {{ $abouts->address2 ? ', ' . $abouts->address2 : '' }}
+                                {{ $abouts->address3 ? ', ' . $abouts->address3 : '' }}</p>
                         </div>
                     @endif
-                    @if (isset($abouts->telegram_link) ||  isset($abouts->instagram ))
+                    @if (isset($abouts->telegram_link) || isset($abouts->instagram))
                         <div class="info__item">
                             <p class="info__sup">Социальные сети:</p>
                             <div class="socials">
-                                @if(isset($abouts->telegram_link ))
-                                <a class="foot-info__txt social" href="{{ $abouts->telegram_link }}">
-                                    <i class="bx bxl-telegram"></i>
-                                </a>
+                                @if (isset($abouts->telegram_link))
+                                    <a class="foot-info__txt social" href="{{ $abouts->telegram_link }}">
+                                        <i class="bx bxl-telegram"></i>
+                                    </a>
                                 @endif
-                                @if(isset($abouts->instagram ))
-                                <a class="foot-info__txt social" href="{{ $abouts->instagram }}">
-                                    <i class="bx bxl-instagram"></i>
-                                </a>
+                                @if (isset($abouts->instagram))
+                                    <a class="foot-info__txt social" href="{{ $abouts->instagram }}">
+                                        <i class="bx bxl-instagram"></i>
+                                    </a>
                                 @endif
                             </div>
                         </div>
