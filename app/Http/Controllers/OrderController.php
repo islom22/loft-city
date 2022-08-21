@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dastavka;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class OrderController extends Controller
     {
         $orders = Order::latest()->with('order_products')->paginate(10);
         $products = Product::all();
-        return view('app.order.index',compact('orders'));
+        $dast= Dastavka::first();
+        return view('app.order.index',compact('orders','dast'));
     }
 
     /**
@@ -43,10 +45,9 @@ class OrderController extends Controller
         // dd($request->all());
         $request->validate([
             'name' => 'required',
-            // 'email' => 'required',
+       
             'phone' => 'required',
-            // 'city' => 'required',
-            // 'address' => 'required',
+        
          ]);
 
         $order = new Order();
@@ -98,10 +99,8 @@ class OrderController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            // 'email' => 'required',
-            'phone' => 'required',
-            // 'city' => 'required',
-            // 'address' => 'required',
+            'phone' => 'required'
+ 
          ]);    
 
         $order =  Order::find($id);

@@ -50,7 +50,9 @@
                     <form action="{{ route('upload-product-image') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $product->id }}">
-                        <input name="img" id="add_img" type="file" class="form-control fileUploadInput" onchange="this.form.submit()" style="position: fixed;
+                        <input name="img" id="add_img" type="file" class="form-control fileUploadInput"
+                            onchange="this.form.submit()"
+                            style="position: fixed;
                         opacity: 0;
                         z-index: -1;">
 
@@ -112,7 +114,7 @@
                                                 <textarea class="form-control ckeditor" placeholder="Enter your description..." rows="4"
                                                     name="info[{{ $language->small }}]">{{ old('info.' . $language->small, $product->info[$language->small]) }}</textarea>
                                             </div>
-                                           
+
                                             <!-- End of Form -->
                                         </div>
                                     </div>
@@ -134,22 +136,25 @@
                             <input type="text" class="form-control" id="brand{{ $key }}" name="brand"
                                 placeholder="brand" value="{{ old('brand', $product->brand) }}">
                         </div>
-                        <div class="mb-4">
+                        <div>
                             <label for="">Category_id</label>
                             <select class="form-control" name="category_id"
                                 onchange="selectValue(this,{{ $key }})"
                                 id="exampleFormControlSelect{{ $key }}">
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->title['ru']  }}
+                                    <option value="{{ $category->id }}"
+                                        {{ $category->id == old('category_id', $product->category_id) ? 'selected' : '' }}>
+                                        {{ $category->title['ru'] }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-                    <button class="btn btn-success text-white px-5" type="submit" style="padding:12px">Save</button>
+                    <button class="btn btn-success text-white px-5" type="submit" style="padding:12px; width:23%; margin-left: 20px;">Save</button>
                 </div>
+            </form>
         </div>
-        </form>
+        
 
     </div>
     </div>
@@ -200,20 +205,20 @@
         //         success: function(data) {
         //             if (data.file_type == 'img') {
         //                 var fileBlok = `
-        //             <div class="d-flex align-items-center justify-content-center me-2 mb-2" style="width: 100px; height: 100px; background-color: #eeeeee82; border-radius: 12px; border: 1px dashed #ccc; cursor: pointer; position: relative">
-        //                 <img src="/images/${data.file_name}" alt="" style="height: 100%; width:100%; border-radius: 12px;object-fit: cover;">
-        //                 <input type="hidden" name="${hi}" value="${data.file_name}">
-        //                 <button class="btn btn-danger rmFile" style="position: absolute;top: -7px;padding: 0.15rem 0.55rem;right: -7px;"><i class="fas fa-times"></i></button>
-        //             </div>
-        //             `
+    //             <div class="d-flex align-items-center justify-content-center me-2 mb-2" style="width: 100px; height: 100px; background-color: #eeeeee82; border-radius: 12px; border: 1px dashed #ccc; cursor: pointer; position: relative">
+    //                 <img src="/images/${data.file_name}" alt="" style="height: 100%; width:100%; border-radius: 12px;object-fit: cover;">
+    //                 <input type="hidden" name="${hi}" value="${data.file_name}">
+    //                 <button class="btn btn-danger rmFile" style="position: absolute;top: -7px;padding: 0.15rem 0.55rem;right: -7px;"><i class="fas fa-times"></i></button>
+    //             </div>
+    //             `
         //             } else {
         //                 var fileBlok = `
-        //             <div class="d-flex align-items-center justify-content-center me-2 mb-2" style="width: 100px; height: 100px; background-color: #eeeeee82; border-radius: 12px; border: 1px dashed #ccc; cursor: pointer; position: relative">
-        //                 <i class="fas fa-file fa-2x" style="color: #29313d;"></i>
-        //                 <input type="hidden" name="${hi}" value="${data.file_name}">
-        //                 <button class="btn btn-danger rmFile" style="position: absolute;top: -7px;padding: 0.15rem 0.55rem;right: -7px;"><i class="fas fa-times"></i></button>
-        //             </div>
-        //             `
+    //             <div class="d-flex align-items-center justify-content-center me-2 mb-2" style="width: 100px; height: 100px; background-color: #eeeeee82; border-radius: 12px; border: 1px dashed #ccc; cursor: pointer; position: relative">
+    //                 <i class="fas fa-file fa-2x" style="color: #29313d;"></i>
+    //                 <input type="hidden" name="${hi}" value="${data.file_name}">
+    //                 <button class="btn btn-danger rmFile" style="position: absolute;top: -7px;padding: 0.15rem 0.55rem;right: -7px;"><i class="fas fa-times"></i></button>
+    //             </div>
+    //             `
         //             }
         //             pv.prepend(fileBlok);
         //         },

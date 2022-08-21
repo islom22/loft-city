@@ -118,7 +118,7 @@
                                     <div class="pay__choose">
                                         <label>
                                             <input type="radio" name="with_delivery" data-value="samovivoz"
-                                                value="Забрать от шоу рума" {{ old('with_delivery') }} checked />
+                                                value="0" {{ old('with_delivery') }} checked />
                                             <span class="redio__design"></span>
                                             <span class="radio__name">Забрать от шоу рума</span>
                                         </label>
@@ -126,7 +126,7 @@
                                     <div class="pay__choose pay__for__buy">
                                         <label>
                                             <input type="radio" name="with_delivery" data-value="s_dostavkoy"
-                                                value="С доставкой?" {{ old('with_delivery') }} />
+                                                value="1" {{ old('with_delivery') }} />
                                             <span class="redio__design"></span>
                                             <span class="radio__name">С доставкой?</span>
                                         </label>
@@ -213,7 +213,7 @@
                                 </div>
                                 <div class="prices__wrapper prices__wrapper__second d-none " id="delivery_price">
                                     <h3>Доставка:</h3>
-                                    <h3>{{ $dast->dastavka }} <span class="small__txt">сум</span> </h3>
+                                    <h3>{{ (int)str_replace(' ','',$dast->dastavka) }} <span class="small__txt">сум</span> </h3>
                                 </div>
                                 <div>
                                     <hr class="reservation__second__half__hr" />
@@ -222,7 +222,7 @@
                                     <h3>Итог заказа:</h3>
                                     <div id="total_price_with_delivery" class="d-none">
 
-                                        <h3>{{ $price + $dast->dastavka }} <span class="small__txt">сум</span>
+                                        <h3>{{ $price + (int)str_replace(' ','',$dast->dastavka) }} <span class="small__txt">сум</span>
                                         </h3>
                                     </div>
 

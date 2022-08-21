@@ -280,6 +280,7 @@
                     @if (isset($products->productImage[0]))
                         <div class="swiper mySwiper2">
                             <div class="swiper-wrapper">
+                                {{-- @dd($products->productImage); --}}
                                 @foreach ($products->productImage as $product)
                                     <div class="swiper-slide">
                                         <div class="slider__container">
@@ -325,7 +326,7 @@
                                         <a data-fslightbox="gallery" {{-- href="https://loftcity.uz/upload/product_image/f4661398cb1a3abd3ffe58600bf11322.jpg" --}}>
                                             <div>
                                                 {{-- @if (isset($product->img)) --}}
-                                                    <img src="{{ asset($product->img) }}" />
+                                                <img src="{{ asset($product->img) }}" />
                                                 {{-- @endif --}}
                                                 {{-- @if (!isset($product->img))
                                                     <img
@@ -339,20 +340,19 @@
                             </div>
                         @else
                             <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <a data-fslightbox="gallery" {{-- href="https://loftcity.uz/upload/product_image/f4661398cb1a3abd3ffe58600bf11322.jpg" --}}>
-                                            <div>
+                                <div class="swiper-slide">
+                                    <a data-fslightbox="gallery" {{-- href="https://loftcity.uz/upload/product_image/f4661398cb1a3abd3ffe58600bf11322.jpg" --}}>
+                                        <div>
 
-                                                {{-- @if (!isset($product->img)) --}}
-                                                    <img
-                                                        src="{{ asset('upload/product_image/default-image-720x530.jpg') }}" />
-                                                {{-- @endif --}}
-                                                {{-- <img src="{{ asset($product->img) }}" /> --}}
-                                            </div>
-                                        </a>
-                                    </div>
+                                            {{-- @if (!isset($product->img)) --}}
+                                            <img src="{{ asset('upload/product_image/default-image-720x530.jpg') }}" />
+                                            {{-- @endif --}}
+                                            {{-- <img src="{{ asset($product->img) }}" /> --}}
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
-                        @endif    
+                        @endif
                     </div>
                 </div>
                 <div class="grid__sec__half">
@@ -472,23 +472,65 @@
                                             @endif --}}
                                         </div>
 
-                                        <div class="prod__content">
-                                            @if (isset($product->title))
-                                                <p class="prod__sup">{{ $product->title['ru'] }}</p>
+                                        {{-- @if (!isset($product->subtitle) || !isset($product->price))
+                                            <div class="prod__content">
+                                                @if (isset($product->category->title))
+                                                    <p class="prod__sup">{{ $product->category->title['ru'] }}</p>
+                                                @endif
+                                                @if (isset($product->title))
+                                                    <p class="prod__name">{{ $product->title['ru'] }}</p>
+                                                @endif
+                                                <div class="prod__bottom">
+                                                    @if (isset($product->price))
+                                                        <p class="prod__price">
+                                                            {{ $product->price }} <span class="small__txt">сум</span>
+                                                        </p>
+                                                    @endif
+                                                    <a href="{{ route('inner_page', ['id' => $product->id]) }}"
+                                                        class="order__btn">
+                                                        подробнее
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="prod__content ">
+                                                @if (isset($product->title))
+                                                    <p class="prod__sup">{{ $product->title['ru'] }}</p>
+                                                @endif
+                                                @if (isset($product->subtitle))
+                                                    <p class="prod__name">{{ $product->subtitle['ru'] }}</p>
+                                                @endif
+                                                <div class="prod__bottom">
+                                                    @if (isset($product->price))
+                                                        <p class="prod__price">
+                                                            {{ $product->price }} <span class="small__txt">сум</span>
+                                                        </p>
+                                                    @endif
+                                                    <a href="{{ route('inner_page', ['id' => $product->id]) }}"
+                                                        class="order__btn">
+                                                        подробнее
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endif --}}
+                                        <div class="prod__content ">
+                                            @if (isset($product->category->title))
+                                                <p class="prod__sup">{{ $product->category->title['ru'] }}</p>
                                             @endif
-                                            @if (isset($product->subtitle))
-                                                <p class="prod__name">{{ $product->subtitle['ru'] }}</p>
+                                            @if (isset($product->title))
+                                                <p class="prod__name" style="padding-bottom: 50px">
+                                                    {{ $product->title['ru'] }}</p>
                                             @endif
                                             <div class="prod__bottom">
                                                 @if (isset($product->price))
-                                                    <p class="prod__price">
+                                                    <p class="prod__price" style="margin-left: 12px">
                                                         {{ $product->price }} <span class="small__txt">сум</span>
                                                     </p>
                                                 @endif
-                                                <button class="order__btn">
-                                                    Подробнее
-                                                    <!-- <i class="bx bx-cart-add"></i> -->
-                                                </button>
+                                                <a href="{{ route('inner_page', ['id' => $product->id]) }}"
+                                                    class="order__btn">
+                                                    подробнее
+                                                </a>
                                             </div>
                                         </div>
                                     </a>

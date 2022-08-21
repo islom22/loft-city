@@ -523,6 +523,7 @@ header {
 .prod__item {
   background: #ffffff;
   border: 1px solid #eaeaea;
+  position: relative;
 }
 .prod__content {
   padding: 1rem;
@@ -545,6 +546,10 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: absolute;
+    bottom: 15px;
+    left: 2px;
+    width: 97%;
 }
 .prod__price {
   font-weight: 600;

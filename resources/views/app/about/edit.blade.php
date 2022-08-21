@@ -49,7 +49,7 @@
                             @endif
                             {{-- @endforeach --}}
                             @if ($about->img1 == null)
-                                <form action="{{ route('upload-about-image_1') }}" method="POST"
+                                <form action="{{ route('upload-about-image') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $about->id }}">
@@ -95,7 +95,7 @@
                             @endif
                             {{-- @endforeach --}}
                             @if ($about->img2 == null)
-                                <form action="{{ route('upload-about-image_2') }}" method="POST"
+                                <form action="{{ route('upload-about-image') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $about->id }}">
@@ -141,7 +141,7 @@
                             @endif
                             {{-- @endforeach --}}
                             @if ($about->img3 == null)
-                                <form action="{{ route('upload-about-image_3') }}" method="POST"
+                                <form action="{{ route('upload-about-image') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $about->id }}">

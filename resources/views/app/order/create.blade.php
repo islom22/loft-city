@@ -74,8 +74,8 @@
                                             <div class="mb-4">
                                                 <label for="exampleFormControlInput2" class="fs-6 fw-bold mb-2">How_to_buy</label>
                                                 <select class="form-select" aria-label="" name="with_delivery"  data-control="select2" data-hide-search="true">
-                                                    <option value="Забрать от шоу рума" {{ old('with_delivery') }}>Забрать от шоу рума</option>
-                                                    <option value="С доставкой?" {{ old('with_delivery') }}>С доставкой?</option>
+                                                    <option value="0" {{ old('with_delivery') }}>Забрать от шоу рума</option>
+                                                    <option value="1" {{ old('with_delivery') }}>С доставкой?</option>
                                                 </select>
                                             </div>
                                             <!-- End of Form -->

@@ -17,11 +17,8 @@
                             <th class="border-0 rounded-start">#</th>
                             <th class="border-0">Name</th>
                             <th class="border-0">Phone</th>
-                            {{-- <th class="border-0">Email</th> --}}
-                            {{-- <th class="border-0">City</th> --}}
-                            {{-- <th class="border-0">Address</th> --}}
                             <th class="border-0">Products</th>
-                            {{-- <th class="border-0">How_to_buy</th> --}}
+                            <th class="border-0">Price</th>
                             <th class="border-0 rounded-end">Actions</th>
                         </tr>
                     </thead>
@@ -34,16 +31,20 @@
                                 </td>
                                 <td class="fw-bold">{{ $order->name }}</td>
                                 <td class="fw-bold">{{ $order->phone }}</td>
-                                {{-- <td class="fw-bold">{{ $order->email }}</td> --}}
-                                {{-- <td class="fw-bold">{{ $order->city }}</td> --}}
+                           
                                 <td>
                                     @foreach ($order->order_products as $product)
-                                        <a  class="fw-bold">{{ $product->title['ru'] }}</a> <br>
+                                        <a class="fw-bold">{{ $product->title['ru'] }}</a> <br>
                                     @endforeach
                                 </td>
-                                {{-- <td class="fw-bold">{{ $order->address }}</td> --}}
-                                {{-- <td class="fw-bold">{{ $order->payment_method }}</td> --}}
-                                {{-- <td class="fw-bold">{{ $order->with_delivery }}</td> --}}
+                                <td>
+                                    @if ($order->with_delivery)
+                                        <a class="fw-bold">{{ $order->order_products->sum('price') + $dast->dastavka }}</a>
+                                    @else
+                                        <a class="fw-bold">{{ $order->order_products->sum('price') }}</a>
+                                    @endif
+                                </td>
+                              
                                 <td>
                                     <div class="actions d-flex">
                                         <form class="" onclick="return myFunction();"

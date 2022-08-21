@@ -38,52 +38,47 @@ class   AboutController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-   
+
         $request->validate([
             'img1' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'img2' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'img3' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'video' => 'required|mimes:mp4,mov,ogg | max:20000',
-            // 'phone' => 'required'
+    
         ]);
-       
-       $about = new About();
-       if($request->hasfile('img1'))
-       {
-           $file = $request->file('img1');
-           $extention = $file->getClientOriginalExtension();
-           $filename = time().'.'.$extention;
-           $file = $request->file('img1');
-           $file->move('uploads/about/', $filename);
-           $about->img1 = $filename;
-       }
-       if($request->hasfile('img2'))
-       {
-           $file = $request->file('img2');
-           $extention = $file->getClientOriginalExtension();
-           $filename = time().'.'.$extention;
-           $file = $request->file('img2');
-           $file->move('uploads/about1/', $filename);
-           $about->img2 = $filename;
-       }
-       if($request->hasfile('img3'))
-       {
-           $file = $request->file('img3');
-           $extention = $file->getClientOriginalExtension();
-           $filename = time().'.'.$extention;
-           $file = $request->file('img3');
-           $file->move('uploads/about2/', $filename);
-           $about->img3 = $filename;
-       }
-       if($request->hasfile('video'))
-       {
-           $file = $request->file('video');
-           $extention = $file->getClientOriginalExtension();
-           $filename = time().'.'.$extention;
-           $file = $request->file('video');
-           $file->move('uploads/video/', $filename);
-           $about->video = $filename;
-       }
+
+        $about = new About();
+        if ($request->hasfile('img1')) {
+            $file = $request->file('img1');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extention;
+            $file = $request->file('img1');
+            $file->move('uploads/about/', $filename);
+            $about->img1 = $filename;
+        }
+        if ($request->hasfile('img2')) {
+            $file = $request->file('img2');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extention;
+            $file = $request->file('img2');
+            $file->move('uploads/about1/', $filename);
+            $about->img2 = $filename;
+        }
+        if ($request->hasfile('img3')) {
+            $file = $request->file('img3');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extention;
+            $file = $request->file('img3');
+            $file->move('uploads/about2/', $filename);
+            $about->img3 = $filename;
+        }
+        if ($request->hasfile('video')) {
+            $file = $request->file('video');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extention;
+            $file = $request->file('video');
+            $file->move('uploads/video/', $filename);
+            $about->video = $filename;
+        }
         $about->address1 = $request->input('address1');
         $about->phone = $request->input('phone');
         $about->address2 = $request->input('address2');
@@ -96,63 +91,33 @@ class   AboutController extends Controller
         return redirect()->route('abouts.index')->with(['message' => 'Successfully added!']);
     }
 
-    public function upload_about_image_1(Request $request)
+
+
+    public function upload_about_image(Request $request)
     {
-        //   dd($request->all());
-        $request->validate([
-            'img1' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
-        ]);
-
+      
         $about = About::find($request->id);
-
-        $file = $request->file('img1');
-        $extention = $file->getClientOriginalExtension();
-        $filename = time() . '.' . $extention;
-        $file->move('uploads/about/', $filename);
-        $about->img1 = $filename;
-
-
-        $about->save();
-
-        return redirect()->back()->with('message', 'Image Upload Successfully');
-    }
-
-    public function upload_about_image_2(Request $request)
-    {
-        //   dd($request->all());
-        $request->validate([
-            'img2' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
-        ]);
-
-        $about = About::find($request->id);
-
-        $file = $request->file('img2');
-        $extention = $file->getClientOriginalExtension();
-        $filename = time() . '.' . $extention;
-        $file->move('uploads/about1/', $filename);
-        $about->img2 = $filename;
-
-
-        $about->save();
-
-        return redirect()->back()->with('message', 'Image Upload Successfully');
-    }
-
-    public function upload_about_image_3(Request $request)
-    {
-        //   dd($request->all());
-        $request->validate([
-            'img3' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
-        ]);
-
-        $about = About::find($request->id);
-
-        $file = $request->file('img3');
-        $extention = $file->getClientOriginalExtension();
-        $filename = time() . '.' . $extention;
-        $file->move('uploads/about2/', $filename);
-        $about->img3 = $filename;
-
+        if ($request->hasfile('img3')) {
+            $file = $request->file('img3');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extention;
+            $file->move('uploads/about2/', $filename);
+            $about->img3 = $filename;
+        }
+        if ($request->hasfile('img2')) {
+            $file = $request->file('img2');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extention;
+            $file->move('uploads/about1/', $filename);
+            $about->img2 = $filename;
+        }
+        if ($request->hasfile('img1')) {
+            $file = $request->file('img1');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extention;
+            $file->move('uploads/about/', $filename);
+            $about->img1 = $filename;
+        }
 
         $about->save();
 
@@ -170,8 +135,8 @@ class   AboutController extends Controller
 
         $file = $request->file('video');
         $extention = $file->getClientOriginalExtension();
-        $filename = time().'.'.$extention;
-        $file = $request->file('video');
+        $filename = time() . '.' . $extention;
+        // $file = $request->file('video');
         $file->move('uploads/video/', $filename);
         $about->video = $filename;
 
@@ -201,9 +166,9 @@ class   AboutController extends Controller
     public function edit($id)
     {
         $about = About::find($id);
-        return view('app.about.edit', compact([
+        return view('app.about.edit', compact(
             'about'
-        ]));
+        ));
     }
 
     /**
@@ -215,52 +180,9 @@ class   AboutController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
-        $request->validate([
-            // 'img1' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'img2' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'img3' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'video' => 'required|mimes:mp4,mov,ogg | max:20000',
-            // 'phone' => 'required',
-        ]);
 
-        $about =About::find($id);
-    //    if($request->hasfile('img1'))
-    //    {
-    //        $file = $request->file('img1');
-    //        $extention = $file->getClientOriginalExtension();
-    //        $filename = time().'.'.$extention;
-    //        $file = $request->file('img1');
-    //        $file->move('uploads/about/', $filename);
-    //        $about->img1 = $filename;
-    //    }
-    //    if($request->hasfile('img2'))
-    //    {
-    //        $file = $request->file('img2');
-    //        $extention = $file->getClientOriginalExtension();
-    //        $filename = time().'.'.$extention;
-    //        $file = $request->file('img2');
-    //        $file->move('uploads/about1/', $filename);
-    //        $about->img2 = $filename;
-    //    }
-    //    if($request->hasfile('img3'))
-    //    {
-    //        $file = $request->file('img3');
-    //        $extention = $file->getClientOriginalExtension();
-    //        $filename = time().'.'.$extention;
-    //        $file = $request->file('img3');
-    //        $file->move('uploads/about2/', $filename);
-    //        $about->img3 = $filename;
-    //    }
-    //    if($request->hasfile('video'))
-    //    {
-    //        $file = $request->file('video');
-    //        $extention = $file->getClientOriginalExtension();
-    //        $filename = time().'.'.$extention;
-    //        $file = $request->file('video');
-    //        $file->move('uploads/video/', $filename);
-    //        $about->video = $filename;
-    //    }
+        $about = About::find($id);
+
         $about->address1 = $request->input('address1');
         $about->phone = $request->input('phone');
         $about->address2 = $request->input('address2');

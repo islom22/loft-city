@@ -55,7 +55,7 @@
     @endif
 
     <section>
-        <div class="container__size">
+        <div class="container__size py-2" >
             <div class="grid__helf__wrapper">
                 {{-- @foreach ($abouts as $about) --}}
                 @if (isset($abouts->img1) || isset($abouts->img2) || isset($abouts->img3))

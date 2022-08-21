@@ -62,8 +62,8 @@
             }
 
             /*.row{
-                                      width: initial !important;
-                                    }*/
+                                              width: initial !important;
+                                            }*/
             .primary-sidebar-inner {
                 width: 100% !important;
             }
@@ -154,25 +154,47 @@
                                                 alt="" class="prod__pic" /> --}}
                                         </div>
 
-                                        <div class="prod__content">
-                                            @if (isset($product->title))
-                                                <p class="prod__sup">{{ $product->title['ru'] }}</p>
-                                            @endif
-                                            @if (isset($product->subtitle))
-                                                <p class="prod__name">{{ $product->subtitle['ru'] }}</p>
-                                            @endif
-                                            <div class="prod__bottom">
-                                                @if (isset($product->price))
-                                                    <p class="prod__price">
-                                                        {{ $product->price }} <span class="small__txt">сум</span>
-                                                    </p>
+                                        @if (!isset($product->subtitle) || !isset($product->price))
+                                            <div class="prod__content d-flex justify-content-between">
+                                                @if (isset($product->category->title))
+                                                    <p class="prod__sup">{{ $product->category->title['ru'] }}</p>
                                                 @endif
-                                                <a href="{{ route('inner_page', ['id' => $product->id]) }}"
-                                                    class="order__btn">
-                                                    подробнее
-                                                </a>
+                                                @if (isset($product->title))
+                                                    <p class="prod__name">{{ $product->title['ru'] }}</p>
+                                                @endif
+                                                <div class="prod__bottom">
+                                                    @if (isset($product->price))
+                                                        <p class="prod__price" style="margin-left: 12px">
+                                                            {{ $product->price }} <span class="small__txt">сум</span>
+                                                        </p>
+                                                    @endif
+                                                    <a href="{{ route('inner_page', ['id' => $product->id]) }}"
+                                                        class="order__btn">
+                                                        подробнее
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @else
+                                            <div class="prod__content ">
+                                                @if (isset($product->category->title))
+                                                    <p class="prod__sup">{{ $product->category->title['ru'] }}</p>
+                                                @endif
+                                                @if (isset($product->title))
+                                                    <p class="prod__name" style="padding-bottom: 50px">{{ $product->title['ru'] }}</p>
+                                                @endif
+                                                <div class="prod__bottom">
+                                                    @if (isset($product->price))
+                                                        <p class="prod__price" style="margin-left: 12px">
+                                                            {{ $product->price }} <span class="small__txt">сум</span>
+                                                        </p>
+                                                    @endif
+                                                    <a href="{{ route('inner_page', ['id' => $product->id]) }}"
+                                                        class="order__btn">
+                                                        подробнее
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endif
                                         {{-- @endforeach --}}
 
                                     </a>

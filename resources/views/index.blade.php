@@ -24,6 +24,27 @@
             font-weight: bold
         }
 
+        /* .prod__bottom {
+            margin-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        } */
+
+        /* .prod__bottom {
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+        } */
+        .prod__bottom {
+            margin-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+
         .cat__pic {
             height: 450px;
             object-fit: cover;
@@ -451,7 +472,7 @@
                 <div class="prod__items">
                     {{-- @dd($products); --}}
                     @foreach ($products as $product)
-                        <div class="prod__item">
+                        <div class="prod__item ">
                             <a href="{{ route('inner_page', ['id' => $product->id]) }}" class="prod__item-link">
                                 {{-- @foreach ($product->productImage as $item) --}}
                                 <div class="prod__img">
@@ -465,7 +486,80 @@
                                     @endif
                                 </div>
                             </a>
-                            <div class="prod__content">
+                            {{-- @if (!isset($product->subtitle) || !isset($product->price))
+                                <div class="prod__content d-flex justify-content-between main-content " style="min-height: 144px ">
+                                    @if (isset($product->title))
+                                        <p class="prod__sup">{{ $product->title['ru'] }}</p>
+                                    @endif
+                                    @if (isset($product->subtitle))
+                                        <p class="prod__name">{{ $product->subtitle['ru'] }}</p>
+                                    @endif
+                                    <div class="prod__bottom postion:absolute bottom:0 right:0 " style="position: absolute bottom:0px right:absolute align-items:flex-end justify-content: space-between align-content:normal  flex-wrap:nowrap ">
+                                        @if (isset($product->price))
+                                            <p class="prod__price">
+                                                {{ $product->price }} <span class="small__txt">сум</span>
+                                            </p>
+                                        @endif
+                                        <a href="{{ route('inner_page', ['id' => $product->id]) }}"
+                                            class="order__btn right main-content d-flex">
+                                            подробнее
+                                        </a>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="prod__content " >
+                                    @if (isset($product->title))
+                                        <p class="prod__sup">{{ $product->title['ru'] }}</p>
+                                    @endif
+                                    @if (isset($product->subtitle))
+                                        <p class="prod__name">{{ $product->subtitle['ru'] }}</p>
+                                    @endif
+                                    <div class="prod__bottom">
+                                        @if (isset($product->price))
+                                            <p class="prod__price">
+                                                {{ $product->price }} <span class="small__txt">сум</span>
+                                            </p>
+                                        @endif
+                                        <a href="{{ route('inner_page', ['id' => $product->id]) }}"
+                                            class="order__btn">
+                                            подробнее
+                                        </a>
+                                    </div>
+                                </div>
+                            @endif --}}
+
+                            <div class="prod__content ">
+                                <div class="pb-5">
+
+                                    @if (isset($product->category->title))
+                                    <p class="prod__sup">{{ $product->category->title['ru']}}</p>
+                                    @endif
+                                    @if (isset($product->title))
+                                    <p class="prod__name">{{ $product->title['ru'] }}</p>
+                                    @endif
+                                </div>
+                                    <div class="prod__bottom row"
+                                    style="position: relative top:40px left:40px margin-left:auto">
+                                    <div class="col-md-8">
+
+                                        @if (isset($product->price))
+                                            <p class="prod__price" style="margin-left: 12px">
+                                                {{ $product->price }} <span class="small__txt">сум</span>
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <a href="{{ route('inner_page', ['id' => $product->id]) }}"
+                                            class="order__btn">
+                                            подробнее
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            {{-- <div class="prod__content ">
                                 @if (isset($product->title))
                                     <p class="prod__sup">{{ $product->title['ru'] }}</p>
                                 @endif
@@ -482,7 +576,8 @@
                                         подробнее
                                     </a>
                                 </div>
-                            </div>
+                            </div> --}}
+
                             {{-- @endforeach --}}
                         </div>
                     @endforeach

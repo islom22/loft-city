@@ -156,6 +156,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $request->validate([
             'title.ru' => 'required',
             'category_id' => 'required',
@@ -197,7 +198,7 @@ class ProductController extends Controller
         //         ]);
         //     }
             $product->update();
-
+            // dd($product);
             return redirect()->route('products.index')->with('message', 'Product Edit Successfully');
         
     }

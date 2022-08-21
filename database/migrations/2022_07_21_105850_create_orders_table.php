@@ -21,8 +21,8 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->text('city')->nullable();
             $table->enum('payment_method',['cash','card']);
-            $table->text('with_delivery');
-            $table->text('products')->nullable();
+            $table->boolean('with_delivery');
+            // $table->text('products')->nullable();
             $table->timestamps();
         });
     }

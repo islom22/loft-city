@@ -84,9 +84,9 @@
                                             onchange="selectValue(this,{{ $key }})"
                                             id="exampleFormControlSelect{{ $key }}">
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">
+                                                <option value="{{ $category->id }}" @if(old('category_id') == $category->id) selected @endif>
                                                     {{ $category->title['ru'] }}
-                                                </option>
+                                                </option>category_id
                                             @endforeach
                                         </select>
                                     </div>
@@ -106,7 +106,6 @@
                                     </div>
                                     <div class="mb-4">
                                         <label for="">Brand</label>
-                                        {{-- <input type="text" name="title" class="form-control" value="{{ old('title') }}"> --}}
                                         <input type="text" class="form-control" id="brand{{ $key }}"
                                             onchange="Brand(this,{{ $key }})" name="brand"
                                             placeholder="brand" value="{{ old('brand') }}">

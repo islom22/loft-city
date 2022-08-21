@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use App\Models\About;
 use App\Models\Category;
 use App\Models\Dastavka;
@@ -70,9 +71,9 @@ class    WebController extends Controller
       $abouts = About::latest()->first();
       // $admins = Product::with('productImage', 'category')->paginate(5);
       $admins = Product::where('id', '!=', $id)
-      ->where('category_id',$products->category_id)
-      ->take(4)
-      ->get();
+         ->where('category_id', $products->category_id)
+         ->take(4)
+         ->get();
       $files = File::latest()->first();
       return view('inner_page', compact(
          'products',
@@ -173,31 +174,21 @@ class    WebController extends Controller
 
    public function order(Request $request)
    {
-      // dd($request->all());
-      // $request->validate([
-      //    'name' => 'required|max:255',
-      //    'phone' => 'required|max:255',
-      //    // 'payment' => 'required',
-      //    // 'role' => 'required',
-      //    // 'email' => 'required',
-      //    // 'city' => 'required',
-      //    // 'address' => 'required'
-      // ]);
+     
       $data = $request->all();
-      // dd($request->all());
       $data['phone'] = $request->phone;
       $data['payment_method'] = $request->payment_method;
       $data['with_delivery'] = $request->with_delivery;
       $data['products'] = session()->has('products_id') ? session()->get('products_id') : [];
-      // dd($data); 
       $order = Order::create($data);
 
       foreach ($data['products'] as $id) {
-
-         OrderProduct::create([
-            'order_id' => $order->id,
-            'product_id' => $id
-         ]);
+         if (!OrderProduct::where('order_id', $order->id)->where('product_id', $id)->first()) {
+            OrderProduct::create([
+               'order_id' => $order->id,
+               'product_id' => $id
+            ]);
+         }
       }
 
       session()->forget('products_id');
@@ -211,25 +202,26 @@ class    WebController extends Controller
 
    public function dastavka(Request $request)
    {
-      $request->validate([
-         'dastavka' => 'required|max:255'
+      $data = $request->all();
+      $data['dastavka'] = preg_replace('/\D/', '', $data['dastavka']);
+      
+      $validator = Validator::make($data, [
+         'dastavka' => 'required|integer'
       ]);
+      if($validator->fails()) {
+         return back()->with([
+            'sucecss' => false,
+            'message' => $validator->errors()
+         ]);
+      }
+
       Dastavka::truncate();
-    $dast=  Dastavka::create([
-         'dastavka' => request('dastavka')
+     
+      Dastavka::create([
+         'dastavka' => $data['dastavka']
       ]);
-
-
-
-      $products = Product::with('category')
-         ->paginate(10);
-      $categories = Category::all();
-      // $dast = Dastavka::all()->last();
 
       return back()->with([
-         'products' => $products,
-         'categories' => $categories,
-         'dast' => $dast,
          'message' => 'Dastavka Upload Successfully'
       ]);
    }
@@ -244,28 +236,5 @@ class    WebController extends Controller
          'message' => 'Заказ оформлен! Скоро с вами свяжемся'
       ]);
    }
-
-   //  public function order(Request $request)
-   //  {
-   //      // dd($request->all());
-   //      $request->validate([
-   //       'name' => 'required',
-   //       'email' => 'required',
-   //       'phone' => 'required',
-   //       'city' => 'required',
-   //       'address' => 'required',
-   //    ]);
-
-   //   $order = new Order();
-   //   $order->name = $request->input('name');
-   //   $order->email = $request->input('email');
-   //   $order->phone = $request->input('phone');
-   //   $order->city = $request->input('city');
-   //   $order->address = $request->input('address');
-   //   $order->role = $request->input('role');
-   //   $order->payment = $request->input('payment');
-   //   $order->save();
-   //   return redirect()->route('reservation_page')->with('message','Order Added Successfully');
-   //  }
 
 }

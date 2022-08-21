@@ -61,7 +61,7 @@ class CategoryController extends Controller
 
     public function upload_category_image(Request $request)
     {
-        //   dd($request->all());
+        
         $request->validate([
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
         ]);
@@ -115,23 +115,12 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            // 'img' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            
             'title.ru' => 'required|min:1|max:255'
         ]);
 
         $category = Category::find($id);
-        // if($request->hasfile('img'))
-        // {
-        //     $destination = 'uploads/category/'.$category->img;
-        //     if(File::exists($destination)){
-        //         File::delete($destination);
-        //     }
-        //     $file = $request->file('img');
-        //     $extention = $file->getClientOriginalExtension();
-        //     $filename = time().'.'.$extention;
-        //     $file->move('uploads/category/', $filename);
-        //     $category->img = $filename;
-        // }
+      
         $category->title = $request->title;
         $category->update();
         return redirect()->route('categories.index')->with('message', 'Category Edit Successfully');
